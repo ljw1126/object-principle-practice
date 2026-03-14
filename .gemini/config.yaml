@@ -1,0 +1,38 @@
+# Gemini Code Assist Official Configuration
+
+have_fun: false
+
+# 메모리 기능 (이전 리뷰 맥락 기억 여부)
+memory_config:
+  disabled: false
+
+# 코드 리뷰 상세 설정
+code_review:
+  disable: false
+  # 리뷰 강도 설정 (HIGH로 설정하여 설계 원칙을 꼼꼼히 봅니다)
+  comment_severity_threshold: HIGH
+  # 생성할 최대 댓글 수 (-1은 제한 없음)
+  max_review_comments: -1
+  
+  # PR 오픈 시 동작 설정
+  pull_request_opened:
+    help: false       # 도움말 댓글 생성 여부
+    summary: true     # 변경 사항 요약 생성 여부
+    code_review: true # 코드 리뷰 수행 여부
+    include_drafts: true # 드래프트 PR도 리뷰 포함 여부
+
+  # [중요] 리뷰 지침 및 페르소나 설정
+  # 공식 템플릿에는 없지만, App이 프로젝트의 .gemini/styleguide.md를 자동으로 참조합니다.
+  # 만약 특정 지침을 강제하고 싶다면 아래와 같이 지침을 추가할 수 있습니다.
+  system_instructions: |
+    당신은 '오브젝트(조영호 저)'의 설계 철학을 준수하는 시니어 객체지향 설계 전문가입니다.
+    모든 리뷰는 한국어로 작성하며, .gemini/styleguide.md에 명시된 설계 원칙을 기준으로 비판적이고 건설적인 피드백을 제공하세요.
+
+# 분석에서 제외할 패턴
+ignore_patterns:
+  - "**/build/**"
+  - "**/.gradle/**"
+  - "**/gradlew*"
+  - "**/settings.gradle"
+  - "**/build.gradle"
+  - "**/docs/**"
