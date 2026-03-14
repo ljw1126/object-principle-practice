@@ -14,17 +14,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Gemini Code Review
-        uses: anc95/ChatGPT-CodeReview@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          # 사용할 모델 (gemini-1.5-pro 또는 gemini-1.5-flash)
-          MODEL: gemini-1.5-flash
-          # 언어 설정
-          LANGUAGE: Korean
-          # Gemini API를 사용함을 명시
-          TYPE: gemini
+        uses: google-gemini/gemini-github-actions/review@main
+        with:
+          # Google AI Studio에서 발급받은 API 키
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          # GitHub 토큰 (자동 생성됨)
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 사용할 모델
+          model: gemini-1.5-flash
+          # 리뷰 언어 (프롬프트에 추가 가능)
+          custom_prompt: |
+            You are a professional software engineer specializing in Object-Oriented Design.
+            Review the following code changes and provide feedback in Korean.
+            Focus on Object-Oriented principles (SOLID, coupling, cohesion).
