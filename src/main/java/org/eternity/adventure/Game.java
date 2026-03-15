@@ -30,14 +30,15 @@ public class Game {
     }
 
     public void run() {
+        // 환영 문구 출력
         System.out.println("환영합니다!");
         System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
         System.out.println(rooms[x + y * width].description());
         System.out.println("다음 명령어를 사용할 수 있습니다.");
         System.out.println("go {north|east|south|west} - 이동, quit - 게임 종료");
 
+        // 게임 플레이
         Scanner scanner = new Scanner(System.in);
-
         running = true;
         while (running) {
             System.out.print("> ");
@@ -90,6 +91,7 @@ public class Game {
             }
         }
 
+        // 작별 문구 출력
         System.out.println("\n게임을 종료합니다.");
     }
 }
