@@ -59,7 +59,7 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         start();
         while (isRunning()) {
-            System.out.print("> ");
+            showPrompt();
             String[] commands = scanner.nextLine().toLowerCase().trim().split("\\s+");
             switch (commands[0]) {
                 case "go" -> {
@@ -75,6 +75,10 @@ public class Game {
                 default -> showUnknownCommand();
             }
         }
+    }
+
+    private void showPrompt() {
+        System.out.print("> ");
     }
 
     private void showUnknownCommand() {
