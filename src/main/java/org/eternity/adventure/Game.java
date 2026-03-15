@@ -57,8 +57,8 @@ public class Game {
 
     private void play() {
         Scanner scanner = new Scanner(System.in);
-        running = true;
-        while (running) {
+        start();
+        while (isRunning()) {
             System.out.print("> ");
             String[] commands = scanner.nextLine().toLowerCase().trim().split("\\s+");
             switch (commands[0]) {
@@ -72,10 +72,22 @@ public class Game {
                     }
                 }
 
-                case "quit" -> running = false;
+                case "quit" -> stop();
                 default -> System.out.println("이해할 수 없는 명령어입니다.");
             }
         }
+    }
+
+    private void start() {
+        this.running = true;
+    }
+
+    private boolean isRunning() {
+        return this.running == true;
+    }
+
+    private void stop() {
+        this.running = false;
     }
 
     private void moveNorth() {
