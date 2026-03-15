@@ -68,14 +68,17 @@ public class Game {
                         case "south" -> moveSouth();
                         case "east" -> moveEast();
                         case "west" -> moveWest();
-                        default -> System.out.println("이해할 수 없는 명령어입니다.");
+                        default -> showUnknownCommand();
                     }
                 }
-
                 case "quit" -> stop();
-                default -> System.out.println("이해할 수 없는 명령어입니다.");
+                default -> showUnknownCommand();
             }
         }
+    }
+
+    private void showUnknownCommand() {
+        System.out.println("이해할 수 없는 명령어입니다.");
     }
 
     private void start() {
