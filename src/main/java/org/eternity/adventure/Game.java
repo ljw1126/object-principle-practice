@@ -110,17 +110,21 @@ public class Game {
     }
 
     private void tryMove(int incX, int incY) {
-        if(y + incY < 0 
-            || y + incY >= height 
-            || x + incX >= width
-            || x + incX < 0 
-            || roomAt(x + incX, y + incY) == null) {
+        if(isBlocked(x + incX, y + incY)) {
             showBlocked();
         } else {
             this.x += incX;
             this.y += incY;
             showRoom();
         }
+    }
+
+    private boolean isBlocked(int x, int y) {
+        return y < 0 
+            || y >= height 
+            || x >= width
+            || x < 0 
+            || roomAt(x, y) == null;
     }
 
     private Room roomAt(int x, int y ) {
