@@ -46,8 +46,9 @@ public class Game {
     }
 
     private void showRoom() {
-        System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-        System.out.println(rooms[x + y * width].description());
+        var room = roomAt(x, y);
+        System.out.println("당신은 [" + room.name() + "]에 있습니다.");
+        System.out.println(room.description());
     }
 
     private void showHelp() {
