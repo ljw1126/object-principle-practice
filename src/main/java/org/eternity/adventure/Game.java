@@ -36,9 +36,14 @@ public class Game {
     }
 
     private void welcome() {
+        // 인사말 출력
         System.out.println("환영합니다!");
+
+        // 현재 방 정보 출력
         System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
         System.out.println(rooms[x + y * width].description());
+
+        // 도움말 출력
         System.out.println("다음 명령어를 사용할 수 있습니다.");
         System.out.println("go {north|east|south|west} - 이동, quit - 게임 종료");
     }
