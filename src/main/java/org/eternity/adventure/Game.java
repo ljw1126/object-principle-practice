@@ -120,11 +120,15 @@ public class Game {
     }
 
     private boolean isBlocked(int x, int y) {
+        return isExcluded(x, y) 
+            || roomAt(x, y) == null;
+    }
+
+    private boolean isExcluded(int x, int y) {
         return y < 0 
             || y >= height 
             || x >= width
-            || x < 0 
-            || roomAt(x, y) == null;
+            || x < 0;
     }
 
     private Room roomAt(int x, int y ) {
