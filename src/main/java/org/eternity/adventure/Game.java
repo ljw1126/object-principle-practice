@@ -94,10 +94,31 @@ public class Game {
     }
 
     private void moveNorth() {
-        if (y - 1 < 0 || roomAt(x, y - 1) == null) {
-            System.out.println("이동할 수 없습니다.");
+        tryMove(0, -1);
+    }
+
+    private void moveSouth() {
+        tryMove(0, 1);
+    }
+
+    private void moveEast() {
+        tryMove(1, 0);
+    }
+
+    private void moveWest() {
+        tryMove(-1, 0);
+    }
+
+    private void tryMove(int incX, int incY) {
+        if(y - incY < 0 
+            || y + incY >= height 
+            || x + incX >= width
+            || x + incX < 0 
+            || roomAt(x + incX, y + incY) == null) {
+            showBlocked();
         } else {
-            y -= 1;
+            this.x += incX;
+            this.y += incY;
             showRoom();
         }
     }
@@ -106,31 +127,8 @@ public class Game {
         return rooms[x + y * width];
     }
 
-    private void moveSouth() {
-        if (y + 1 >= height || roomAt(x, y + 1) == null) {
-            System.out.println("이동할 수 없습니다.");
-        } else {
-            y += 1;
-            showRoom();
-        }
-    }
-
-    private void moveEast() {
-        if (x + 1 >= width || roomAt(x + 1 , y) == null) {
-            System.out.println("이동할 수 없습니다.");
-        } else {
-            x += 1;
-            showRoom();
-        }
-    }
-
-    private void moveWest() {
-        if (x - 1 < 0 || roomAt(x - 1, y) == null) {
-            System.out.println("이동할 수 없습니다.");
-        } else {
-            x -= 1;
-            showRoom();
-        }
+    private void showBlocked() {
+        System.out.println("이동할 수 없습니다.");
     }
 
     private void farewell() {
