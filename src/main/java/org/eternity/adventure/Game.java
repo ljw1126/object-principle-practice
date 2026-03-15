@@ -36,14 +36,21 @@ public class Game {
     }
 
     private void welcome() {
-        // 인사말 출력
-        System.out.println("환영합니다!");
+        showGreetings();
+        showRoom();
+        showHelp();
+    }
 
-        // 현재 방 정보 출력
+    private void showGreetings() {
+        System.out.println("환영합니다!");
+    }
+
+    private void showRoom() {
         System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
         System.out.println(rooms[x + y * width].description());
+    }
 
-        // 도움말 출력
+    private void showHelp() {
         System.out.println("다음 명령어를 사용할 수 있습니다.");
         System.out.println("go {north|east|south|west} - 이동, quit - 게임 종료");
     }
@@ -62,8 +69,7 @@ public class Game {
                                 System.out.println("이동할 수 없습니다.");
                             } else {
                                 y -= 1;
-                                System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-                                System.out.println(rooms[x + y * width].description());
+                                showRoom();
                             }
                         }
                         case "south" -> {
@@ -71,8 +77,7 @@ public class Game {
                                 System.out.println("이동할 수 없습니다.");
                             } else {
                                 y += 1;
-                                System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-                                System.out.println(rooms[x + y * width].description());
+                                showRoom();
                             }
                         }
                         case "east" -> {
@@ -80,8 +85,7 @@ public class Game {
                                 System.out.println("이동할 수 없습니다.");
                             } else {
                                 x += 1;
-                                System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-                                System.out.println(rooms[x + y * width].description());
+                                showRoom();
                             }
                         }
                         case "west" -> {
@@ -89,8 +93,7 @@ public class Game {
                                 System.out.println("이동할 수 없습니다.");
                             } else {
                                 x -= 1;
-                                System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-                                System.out.println(rooms[x + y * width].description());
+                                showRoom();
                             }
                         }
                         default -> System.out.println("이해할 수 없는 명령어입니다.");
