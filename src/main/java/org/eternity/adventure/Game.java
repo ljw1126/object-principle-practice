@@ -57,23 +57,29 @@ public class Game {
 
     private void play() {
         Scanner scanner = new Scanner(System.in);
+        
         start();
+        
         while (isRunning()) {
             showPrompt();
-            String[] commands = scanner.nextLine().toLowerCase().trim().split("\\s+");
-            switch (commands[0]) {
-                case "go" -> {
-                    switch (commands[1]) {
-                        case "north" -> moveNorth();
-                        case "south" -> moveSouth();
-                        case "east" -> moveEast();
-                        case "west" -> moveWest();
-                        default -> showUnknownCommand();
-                    }
+            parseCommand(scanner);
+        }
+    }
+
+    private void parseCommand(Scanner scanner) {
+        String[] commands = scanner.nextLine().toLowerCase().trim().split("\\s+");
+        switch (commands[0]) {
+            case "go" -> {
+                switch (commands[1]) {
+                    case "north" -> moveNorth();
+                    case "south" -> moveSouth();
+                    case "east" -> moveEast();
+                    case "west" -> moveWest();
+                    default -> showUnknownCommand();
                 }
-                case "quit" -> stop();
-                default -> showUnknownCommand();
             }
+            case "quit" -> stop();
+            default -> showUnknownCommand();
         }
     }
 
