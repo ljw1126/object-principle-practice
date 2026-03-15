@@ -110,7 +110,7 @@ public class Game {
     }
 
     private void tryMove(int incX, int incY) {
-        if(y - incY < 0 
+        if(y + incY < 0 
             || y + incY >= height 
             || x + incX >= width
             || x + incX < 0 
