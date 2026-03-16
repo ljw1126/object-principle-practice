@@ -30,66 +30,127 @@ public class Game {
     }
 
     public void run() {
+        welcome();
+        play();
+        farewell();
+    }
+
+    private void welcome() {
+        showGreetings();
+        showRoom();
+        showHelp();
+    }
+
+    private void showGreetings() {
         System.out.println("환영합니다!");
-        System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-        System.out.println(rooms[x + y * width].description());
+    }
+
+    private void showRoom() {
+        var room = roomAt(x, y);
+        System.out.println("당신은 [" + room.name() + "]에 있습니다.");
+        System.out.println(room.description());
+    }
+
+    private void showHelp() {
         System.out.println("다음 명령어를 사용할 수 있습니다.");
         System.out.println("go {north|east|south|west} - 이동, quit - 게임 종료");
+    }
 
+    private void play() {
         Scanner scanner = new Scanner(System.in);
-
-        running = true;
-        while (running) {
-            System.out.print("> ");
-            String[] commands = scanner.nextLine().toLowerCase().trim().split("\\s+");
-            switch (commands[0]) {
-                case "go" -> {
-                    switch (commands[1]) {
-                        case "north" -> {
-                            if (y - 1 < 0 || rooms[x + (y - 1) * width] == null) {
-                                System.out.println("이동할 수 없습니다.");
-                            } else {
-                                y -= 1;
-                                System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-                                System.out.println(rooms[x + y * width].description());
-                            }
-                        }
-                        case "south" -> {
-                            if (y + 1 >= height || rooms[x + (y + 1) * width] == null) {
-                                System.out.println("이동할 수 없습니다.");
-                            } else {
-                                y += 1;
-                                System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-                                System.out.println(rooms[x + y * width].description());
-                            }
-                        }
-                        case "east" -> {
-                            if (x + 1 >= width || rooms[(x + 1 ) + y * width] == null) {
-                                System.out.println("이동할 수 없습니다.");
-                            } else {
-                                x += 1;
-                                System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-                                System.out.println(rooms[x + y * width].description());
-                            }
-                        }
-                        case "west" -> {
-                            if (x - 1 < 0 || rooms[(x - 1) + y * width] == null) {
-                                System.out.println("이동할 수 없습니다.");
-                            } else {
-                                x -= 1;
-                                System.out.println("당신은 [" + rooms[x + y * width].name() + "]에 있습니다.");
-                                System.out.println(rooms[x + y * width].description());
-                            }
-                        }
-                        default -> System.out.println("이해할 수 없는 명령어입니다.");
-                    }
-                }
-
-                case "quit" -> running = false;
-                default -> System.out.println("이해할 수 없는 명령어입니다.");
-            }
+        
+        start();
+        
+        while (isRunning()) {
+            showPrompt();
+            parseCommand(scanner);
         }
+    }
 
+    private void parseCommand(Scanner scanner) {
+        String[] commands = scanner.nextLine().toLowerCase().trim().split("\\s+");
+        switch (commands[0]) {
+            case "go" -> {
+                switch (commands[1]) {
+                    case "north" -> moveNorth();
+                    case "south" -> moveSouth();
+                    case "east" -> moveEast();
+                    case "west" -> moveWest();
+                    default -> showUnknownCommand();
+                }
+            }
+            case "quit" -> stop();
+            default -> showUnknownCommand();
+        }
+    }
+
+    private void showPrompt() {
+        System.out.print("> ");
+    }
+
+    private void showUnknownCommand() {
+        System.out.println("이해할 수 없는 명령어입니다.");
+    }
+
+    private void start() {
+        this.running = true;
+    }
+
+    private boolean isRunning() {
+        return this.running == true;
+    }
+
+    private void stop() {
+        this.running = false;
+    }
+
+    private void moveNorth() {
+        tryMove(0, -1);
+    }
+
+    private void moveSouth() {
+        tryMove(0, 1);
+    }
+
+    private void moveEast() {
+        tryMove(1, 0);
+    }
+
+    private void moveWest() {
+        tryMove(-1, 0);
+    }
+
+    private void tryMove(int incX, int incY) {
+        if(isBlocked(x + incX, y + incY)) {
+            showBlocked();
+        } else {
+            this.x += incX;
+            this.y += incY;
+            showRoom();
+        }
+    }
+
+    private boolean isBlocked(int x, int y) {
+        return isExcluded(x, y) 
+            || roomAt(x, y) == null;
+    }
+
+    private boolean isExcluded(int x, int y) {
+        return y < 0 
+            || y >= height 
+            || x >= width
+            || x < 0;
+    }
+
+    private Room roomAt(int x, int y ) {
+        return rooms[x + y * width];
+    }
+
+    private void showBlocked() {
+        System.out.println("이동할 수 없습니다.");
+    }
+
+    private void farewell() {
         System.out.println("\n게임을 종료합니다.");
     }
 }
