@@ -7,8 +7,8 @@ public class Room {
     private String name;
     private String description;
 
-    public Room(int x, int y, String name, String description) {
-        this.position = Position.of(x, y);
+    public Room(Position position, String name, String description) {
+        this.position = position;
         this.name = name;
         this.description = description;
     }
