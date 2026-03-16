@@ -2,17 +2,17 @@ package org.eternity.adventure;
 
 import java.util.Scanner;
 import org.eternity.adventure.vo.Position;
+import org.eternity.adventure.vo.Size;
 
 public class Game {
-    private int width, height;
+    private Size size;
     private Room[] rooms;
     private Position position;
     private boolean running;
 
     public Game() {
+        this.size = Size.with(2, 3);
         this.position = Position.of(0, 2);
-        this.width = 2;
-        this.height = 3;
         this.rooms = arrangeRooms(
             new Room(0, 0, "샘", "아름다운 샘물이 흐르는 곳입니다. 이곳에서 휴식을 취할 수 있습니다."),
             new Room(0, 1, "다리", "큰 강 위에 돌로 만든 커다란 다리가 있습니다."),
@@ -22,9 +22,9 @@ public class Game {
     }
 
     private Room[] arrangeRooms(Room ... rooms) {
-        Room[] result = new Room[width * height];
+        Room[] result = new Room[size.area()];
         for(var room : rooms) {
-            result[room.x() + room.y() * width] = room;
+            result[size.indexOf(room.position())] = room;
         }
         return result;
     }
@@ -135,14 +135,11 @@ public class Game {
     }
 
     private boolean isExcluded(Position position) {
-        return position.getY() < 0 
-            || position.getY() >= height 
-            || position.getX() >= width
-            || position.getX() < 0;
+        return !size.contains(position);
     }
 
     private Room roomAt(Position position) {
-        return rooms[position.getX() + position.getY() * width];
+        return rooms[size.indexOf(position)];
     }
 
     private void showBlocked() {
