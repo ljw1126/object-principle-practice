@@ -1,6 +1,7 @@
 package org.eternity.adventure;
 
 import java.util.Scanner;
+import org.eternity.adventure.constant.Direction;
 import org.eternity.adventure.vo.Position;
 import org.eternity.adventure.vo.Size;
 
@@ -72,10 +73,10 @@ public class Game {
         switch (commands[0]) {
             case "go" -> {
                 switch (commands[1]) {
-                    case "north" -> moveNorth();
-                    case "south" -> moveSouth();
-                    case "east" -> moveEast();
-                    case "west" -> moveWest();
+                    case "north" -> tryMove(Direction.NORTH);
+                    case "south" -> tryMove(Direction.SOUTH);
+                    case "east" -> tryMove(Direction.EAST);
+                    case "west" -> tryMove(Direction.WEST);
                     default -> showUnknownCommand();
                 }
             }
@@ -104,27 +105,11 @@ public class Game {
         this.running = false;
     }
 
-    private void moveNorth() {
-        tryMove(0, -1);
-    }
-
-    private void moveSouth() {
-        tryMove(0, 1);
-    }
-
-    private void moveEast() {
-        tryMove(1, 0);
-    }
-
-    private void moveWest() {
-        tryMove(-1, 0);
-    }
-
-    private void tryMove(int incX, int incY) {
-        if(isBlocked(position.shift(incX, incY))) {
+    private void tryMove(Direction direction) {
+        if(isBlocked(position.shift(direction))) {
             showBlocked();
         } else {
-            this.position = position.shift(incX, incY);
+            this.position = position.shift(direction);
             showRoom();
         }
     }

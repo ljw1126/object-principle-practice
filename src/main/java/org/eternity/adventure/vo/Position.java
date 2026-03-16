@@ -1,5 +1,7 @@
 package org.eternity.adventure.vo;
 
+import org.eternity.adventure.constant.Direction;
+
 public class Position {
     private final int x;
     private final int y;
@@ -21,8 +23,13 @@ public class Position {
         return y;
     }
 
-    public Position shift(int incX, int incY) {
-        return new Position(x + incX, y + incY);
+    public Position shift(Direction direction) {
+        return switch(direction) {
+            case NORTH -> Position.of(x, y - 1);
+            case EAST -> Position.of(x + 1, y);
+            case SOUTH -> Position.of(x, y + 1);
+            case WEST -> Position.of(x - 1, y);
+        };
     }
 
     @Override
