@@ -1,13 +1,14 @@
 package org.eternity.adventure;
 
+import org.eternity.adventure.vo.Position;
+
 public class Room {
-     private int x, y;
+    private Position position;
     private String name;
     private String description;
 
     public Room(int x, int y, String name, String description) {
-        this.x = x;
-        this.y = y;
+        this.position = Position.of(x, y);
         this.name = name;
         this.description = description;
     }
@@ -20,11 +21,7 @@ public class Room {
         return description;
     }
 
-    public int x() {
-        return x;
-    }
-
-    public int y() {
-        return y;
+    public Position position() {
+        return position;
     }
 }
