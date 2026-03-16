@@ -1,16 +1,16 @@
 package org.eternity.adventure;
 
 import java.util.Scanner;
+import org.eternity.adventure.vo.Position;
 
 public class Game {
     private int width, height;
     private Room[] rooms;
-    private int x, y;
+    private Position position;
     private boolean running;
 
     public Game() {
-        this.x = 0;
-        this.y = 2;
+        this.position = Position.of(0, 2);
         this.width = 2;
         this.height = 3;
         this.rooms = arrangeRooms(
@@ -46,7 +46,7 @@ public class Game {
     }
 
     private void showRoom() {
-        var room = roomAt(x, y);
+        var room = roomAt(position);
         System.out.println("당신은 [" + room.name() + "]에 있습니다.");
         System.out.println(room.description());
     }
@@ -121,29 +121,28 @@ public class Game {
     }
 
     private void tryMove(int incX, int incY) {
-        if(isBlocked(x + incX, y + incY)) {
+        if(isBlocked(position.shift(incX, incY))) {
             showBlocked();
         } else {
-            this.x += incX;
-            this.y += incY;
+            this.position = position.shift(incX, incY);
             showRoom();
         }
     }
 
-    private boolean isBlocked(int x, int y) {
-        return isExcluded(x, y) 
-            || roomAt(x, y) == null;
+    private boolean isBlocked(Position position) {
+        return isExcluded(position) 
+            || roomAt(position) == null;
     }
 
-    private boolean isExcluded(int x, int y) {
-        return y < 0 
-            || y >= height 
-            || x >= width
-            || x < 0;
+    private boolean isExcluded(Position position) {
+        return position.getY() < 0 
+            || position.getY() >= height 
+            || position.getX() >= width
+            || position.getX() < 0;
     }
 
-    private Room roomAt(int x, int y ) {
-        return rooms[x + y * width];
+    private Room roomAt(Position position) {
+        return rooms[position.getX() + position.getY() * width];
     }
 
     private void showBlocked() {
