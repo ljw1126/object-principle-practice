@@ -24,15 +24,4 @@ public class Size {
     public int area() {
         return width * height;
     }
-
-    public boolean contains(Position position) {
-        return position.getY() >= 0 
-            && position.getY() < height 
-            && position.getX() < width
-            && position.getX() >= 0;
-    }
-
-    public int indexOf(Position position) {
-        return position.getX() + position.getY() * width;
-    }
 }

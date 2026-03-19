@@ -25,7 +25,7 @@ public class Game {
     private Room[] arrangeRooms(Room ... rooms) {
         Room[] result = new Room[size.area()];
         for(var room : rooms) {
-            result[size.indexOf(room.position())] = room;
+            result[room.sizeIn(size.getWidth())] = room;
         }
         return result;
     }
@@ -120,11 +120,11 @@ public class Game {
     }
 
     private boolean isExcluded(Position position) {
-        return !size.contains(position);
+        return !position.isInside(size.getWidth(), size.getHeight());
     }
 
     private Room roomAt(Position position) {
-        return rooms[size.indexOf(position)];
+        return rooms[position.toIndex(size.getWidth())];
     }
 
     private void showBlocked() {

@@ -15,14 +15,6 @@ public class Position {
         return new Position(x, y);
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public Position shift(Direction direction) {
         return switch(direction) {
             case NORTH -> Position.of(x, y - 1);
@@ -30,6 +22,14 @@ public class Position {
             case SOUTH -> Position.of(x, y + 1);
             case WEST -> Position.of(x - 1, y);
         };
+    }
+
+    public boolean isInside(int width, int height) {
+        return y >= 0 && y < height && x < width && x >= 0;
+    }
+
+    public int toIndex(int width) {
+        return x + y * width;
     }
 
     @Override

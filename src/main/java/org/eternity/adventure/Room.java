@@ -24,4 +24,8 @@ public class Room {
     public Position position() {
         return position;
     }
+
+    public int sizeIn(int width) {
+        return position.toIndex(width);
+    }
 }
