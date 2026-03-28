@@ -25,7 +25,7 @@ public class Game {
     private Room[] arrangeRooms(Room ... rooms) {
         Room[] result = new Room[size.area()];
         for(var room : rooms) {
-            result[size.indexOf(room.position())] = room;
+            result[room.indexIn(size)] = room;
         }
         return result;
     }

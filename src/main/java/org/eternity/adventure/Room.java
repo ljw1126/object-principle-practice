@@ -1,6 +1,7 @@
 package org.eternity.adventure;
 
 import org.eternity.adventure.vo.Position;
+import org.eternity.adventure.vo.Size;
 
 public class Room {
     private Position position;
@@ -21,7 +22,7 @@ public class Room {
         return description;
     }
 
-    public Position position() {
-        return position;
+    public int indexIn(Size size) {
+        return size.indexOf(position);
     }
 }
