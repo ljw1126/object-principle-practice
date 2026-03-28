@@ -1,26 +1,25 @@
 package org.eternity.adventure;
 
 import java.util.Scanner;
-import org.eternity.adventure.constant.Direction;
 import org.eternity.adventure.vo.Position;
 import org.eternity.adventure.vo.Size;
 
 public class Game {
-    private WorldMap worldMap;
-    private Position position;
+    private Player player;
     private CommandParser commandParser;
     private boolean running;
     
     public Game() {
-        this.position = Position.of(0, 2);
-        this.worldMap = new WorldMap(
-            Size.with(2, 3), 
-            new Room(Position.of(0, 0), "샘", "아름다운 샘물이 흐르는 곳입니다. 이곳에서 휴식을 취할 수 있습니다."),
-            new Room(Position.of(0, 1), "다리", "큰 강 위에 돌로 만든 커다란 다리가 있습니다."),
-            new Room(Position.of(1, 1), "성", "용왕이 살고 있는 성에 도착했습니다."),
-            new Room(Position.of(0, 2), "언덕", "저 멀리 성이 보이고 언덕 아래로 좁은 길이 나 있습니다."),
-            new Room(Position.of(1, 2), "동굴", "어둠에 잠긴 동굴 안에 작은 화톳불이 피어 있습니다.")
-        );
+        this.player = new Player(
+            new WorldMap(
+                Size.with(2, 3), 
+                new Room(Position.of(0, 0), "샘", "아름다운 샘물이 흐르는 곳입니다. 이곳에서 휴식을 취할 수 있습니다."),
+                new Room(Position.of(0, 1), "다리", "큰 강 위에 돌로 만든 커다란 다리가 있습니다."),
+                new Room(Position.of(1, 1), "성", "용왕이 살고 있는 성에 도착했습니다."),
+                new Room(Position.of(0, 2), "언덕", "저 멀리 성이 보이고 언덕 아래로 좁은 길이 나 있습니다."),
+                new Room(Position.of(1, 2), "동굴", "어둠에 잠긴 동굴 안에 작은 화톳불이 피어 있습니다.")
+            ), 
+            Position.of(0, 2));
         this.commandParser = new CommandParser();
     }
 
@@ -32,18 +31,12 @@ public class Game {
 
     private void welcome() {
         showGreetings();
-        showRoom();
+        player.showRoom();
         showHelp();
     }
 
     private void showGreetings() {
         System.out.println("환영합니다!");
-    }
-
-    private void showRoom() {
-        var room = worldMap.roomAt(position);
-        System.out.println("당신은 [" + room.name() + "]에 있습니다.");
-        System.out.println(room.description());
     }
 
     private void showHelp() {
@@ -74,8 +67,8 @@ public class Game {
 
     private void executeCommand(Command command) {
         switch (command) {
-            case Command.Move move -> tryMove(move.direction());
-            case Command.Look() -> showRoom();
+            case Command.Move move -> player.tryMove(move.direction());
+            case Command.Look() -> player.showRoom();
             case Command.Help() -> showHelp();
             case Command.Quit() -> stop();
             case Command.Unknown() -> showUnknownCommand();
@@ -100,20 +93,6 @@ public class Game {
 
     private void stop() {
         this.running = false;
-    }
-
-    private void tryMove(Direction direction) {
-        Position nexPosition = position.shift(direction);
-        if(worldMap.isBlocked(nexPosition)) {
-            showBlocked();
-        } else {
-            this.position = nexPosition;
-            showRoom();
-        }
-    }
-
-    private void showBlocked() {
-        System.out.println("이동할 수 없습니다.");
     }
 
     private void farewell() {
