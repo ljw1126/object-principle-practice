@@ -1,6 +1,5 @@
 package org.eternity.adventure;
 
-import org.eternity.adventure.constant.Direction;
 import org.eternity.adventure.vo.Position;
 
 public class Player {
@@ -12,24 +11,15 @@ public class Player {
         this.position = position;
     }
 
-    public void tryMove(Direction direction) {
-        Position nexPosition = position.shift(direction);
-        if(worldMap.isBlocked(nexPosition)) {
-            showBlocked();
-        } else {
-            this.position = nexPosition;
-            showRoom();
-        }
+    public void move(Position position) {
+        this.position = position;
     }
 
-    private void showBlocked() {
-        System.out.println("이동할 수 없습니다.");
+    public WorldMap worldMap() {
+        return worldMap;
     }
 
-    public void showRoom() {
-        var room = worldMap.roomAt(position);
-        System.out.println("당신은 [" + room.name() + "]에 있습니다.");
-        System.out.println(room.description());
-    }
-
+    public Position position() {
+        return position;
+    }   
 }

@@ -1,6 +1,7 @@
 package org.eternity.adventure;
 
 import java.util.Scanner;
+import org.eternity.adventure.constant.Direction;
 import org.eternity.adventure.vo.Position;
 import org.eternity.adventure.vo.Size;
 
@@ -31,7 +32,7 @@ public class Game {
 
     private void welcome() {
         showGreetings();
-        player.showRoom();
+        showRoom();
         showHelp();
     }
 
@@ -67,11 +68,21 @@ public class Game {
 
     private void executeCommand(Command command) {
         switch (command) {
-            case Command.Move move -> player.tryMove(move.direction());
-            case Command.Look() -> player.showRoom();
+            case Command.Move move -> tryMove(move.direction());
+            case Command.Look() -> showRoom();
             case Command.Help() -> showHelp();
             case Command.Quit() -> stop();
             case Command.Unknown() -> showUnknownCommand();
+        }
+    }
+
+    public void tryMove(Direction direction) {
+        Position nexPosition = player.position().shift(direction);
+        if(player.worldMap().isBlocked(nexPosition)) {
+            showBlocked();
+        } else {
+            player.move(nexPosition);
+            showRoom();
         }
     }
 
@@ -98,4 +109,15 @@ public class Game {
     private void farewell() {
         System.out.println("\n게임을 종료합니다.");
     }
+
+    public void showBlocked() {
+        System.out.println("이동할 수 없습니다.");
+    }
+
+    public void showRoom() {
+        var room = player.worldMap().roomAt(player.position());
+        System.out.println("당신은 [" + room.name() + "]에 있습니다.");
+        System.out.println(room.description());
+    }
+
 }
