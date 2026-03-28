@@ -24,12 +24,11 @@ public class Position {
         };
     }
 
-    public int x() {
-        return x;
+    public boolean isInside(int width, int height) {
+        return y >= 0 && y < height && x < width && x >= 0;
     }
-
-    public int y() {
-        return y;
+    public int toIndex(int width) {
+        return x + y * width;
     }
 
     @Override

@@ -18,11 +18,10 @@ public class Size {
     }
 
     public boolean contains(Position position) {
-        return position.x() >= 0 && position.x() < width
-                && position.y() >= 0 && position.y() < height;
+        return position.isInside(width, height);
     }
 
     public int indexOf(Position position) {
-        return position.x() + position.y() * width;
+        return position.toIndex(width);
     }
 }
