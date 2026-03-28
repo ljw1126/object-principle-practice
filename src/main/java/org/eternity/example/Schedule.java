@@ -22,7 +22,10 @@ public class Schedule {
         this.dayOfWeek = dayOfWeek;
     }
 
-    // 일정 확인 방식이 변경될 때 수정
+    /**
+     * 지정된 날짜가 해당 월의 n번째(ordinal) 특정 요일(dayOfWeek)에 해당하는지 확인합니다.
+     * 예: 2번째 월요일
+     */
     public boolean includes(LocalDate day) {
         if (!day.getDayOfWeek().equals(dayOfWeek)) {
             return false;
