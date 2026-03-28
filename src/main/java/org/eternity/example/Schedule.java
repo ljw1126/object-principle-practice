@@ -45,13 +45,21 @@ public class Schedule {
      */
     public boolean includes(LocalDate day) {
         if(ordinal != null) {
-            if (!day.getDayOfWeek().equals(dayOfWeek)) {
-                return false;
-            }
-
-            return (day.getDayOfMonth() / DAYS_IN_WEEK) + 1 == ordinal;
+            return checkMonthly(day);
         }
 
+        return checkWeekly(day);
+    }
+
+    private boolean checkMonthly(LocalDate day) {
+        if (!day.getDayOfWeek().equals(dayOfWeek)) {
+            return false;
+        }
+
+        return (day.getDayOfMonth() / DAYS_IN_WEEK) + 1 == ordinal;
+    }
+
+    private boolean checkWeekly(LocalDate day) {
         return dayOfWeeks.contains(day.getDayOfWeek()); // ordinal == null, 데일리 스크럼 일정 확인 로직 실행
     }
 }
