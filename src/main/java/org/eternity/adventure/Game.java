@@ -25,7 +25,7 @@ public class Game {
     private Room[] arrangeRooms(Room ... rooms) {
         Room[] result = new Room[size.area()];
         for(var room : rooms) {
-            result[room.sizeIn(size.getWidth())] = room;
+            result[size.indexOf(room.position())] = room;
         }
         return result;
     }
@@ -63,13 +63,22 @@ public class Game {
         start();
         
         while (isRunning()) {
-            showPrompt();
-            parseCommand(scanner);
+            String input = inputCommand(scanner);
+            parseCommand(input);
         }
     }
 
-    private void parseCommand(Scanner scanner) {
-        String[] commands = scanner.nextLine().toLowerCase().trim().split("\\s+");
+    private String inputCommand(Scanner scanner) {
+        showPrompt();
+        return input(scanner);
+    }
+
+    private String input(Scanner scanner) {
+        return scanner.nextLine();
+    }
+
+    private void parseCommand(String input) {
+        String[] commands = input.toLowerCase().trim().split("\\s+");
         switch (commands[0]) {
             case "go" -> {
                 switch (commands[1]) {
@@ -120,11 +129,11 @@ public class Game {
     }
 
     private boolean isExcluded(Position position) {
-        return !position.isInside(size.getWidth(), size.getHeight());
+        return !size.contains(position);
     }
 
     private Room roomAt(Position position) {
-        return rooms[position.toIndex(size.getWidth())];
+        return rooms[size.indexOf(position)];
     }
 
     private void showBlocked() {
