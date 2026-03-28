@@ -115,10 +115,11 @@ public class Game {
     }
 
     private void tryMove(Direction direction) {
-        if(isBlocked(position.shift(direction))) {
+        Position nexPosition = position.shift(direction);
+        if(isBlocked(nexPosition)) {
             showBlocked();
         } else {
-            this.position = position.shift(direction);
+            this.position = nexPosition;
             showRoom();
         }
     }
