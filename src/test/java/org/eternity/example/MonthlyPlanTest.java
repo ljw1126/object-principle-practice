@@ -16,8 +16,35 @@ public class MonthlyPlanTest {
         "4, MONDAY, 2024-10-28", // 4번째 월요일이 28일인 경우
         "1, TUESDAY, 2024-10-01" // 1번째 화요일이 1일인 경우
     })
-    public void boundary_days_parameterized_test(int ordinal, DayOfWeek dayOfWeek, String date) {
+    public void includes_true(int ordinal, DayOfWeek dayOfWeek, String date) {
         MonthlyPlan plan = new MonthlyPlan(ordinal, dayOfWeek);
         assertThat(plan.includes(LocalDate.parse(date))).isTrue();
+    }
+
+    @ParameterizedTest(name = "{0}번째 {1}가 {2}일 때 includes는 false를 반환해야 한다")
+    @CsvSource({
+        "1, MONDAY, 2024-10-08", // 요일이 다름 (화요일)
+        "2, MONDAY, 2024-10-07", // 주차가 다름 (1주차)
+        "1, SUNDAY, 2024-10-13"  // 주차가 다름 (2주차)
+    })
+    public void includes_false(int ordinal, DayOfWeek dayOfWeek, String date) {
+        MonthlyPlan plan = new MonthlyPlan(ordinal, dayOfWeek);
+        assertThat(plan.includes(LocalDate.parse(date))).isFalse();
+    }
+
+    @ParameterizedTest(name = "{0}일로 reschedule 시 {1}번째 {2} 플랜이 생성되어야 한다")
+    @CsvSource({
+        "2024-10-07, 1, MONDAY",
+        "2024-10-14, 2, MONDAY",
+        "2024-10-01, 1, TUESDAY"
+    })
+    public void reschedule(String date, int expectedOrdinal, DayOfWeek expectedDayOfWeek) {
+        MonthlyPlan plan = new MonthlyPlan(3, DayOfWeek.FRIDAY);
+        MonthlyPlan newPlan = (MonthlyPlan) plan.reschedule(LocalDate.parse(date));
+        
+        assertThat(newPlan.includes(LocalDate.parse(date))).isTrue();
+        // 내부 상태 확인 (ordinal과 dayOfWeek가 올바르게 설정되었는지 검증)
+        assertThat(newPlan).extracting("ordinal").isEqualTo(expectedOrdinal);
+        assertThat(newPlan).extracting("dayOfWeek").isEqualTo(expectedDayOfWeek);
     }
 }
