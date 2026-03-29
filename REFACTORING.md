@@ -230,3 +230,53 @@ private Command parseCommand(String[] commands) {
 - **안정성 강화**: 잘못된 입력(예: 단독 "go")에도 프로그램이 중단되지 않고 적절한 에러 커맨드(`Unknown`)를 생성함.
 - **표현력 향상**: `switch` 문 안에서 단순 매핑뿐만 아니라 필요한 검증 로직을 자연스럽게 녹여낼 수 있음.
 - **명확한 의도**: `yield`를 사용함으로써 "이 블록의 목적은 특정 값을 계산하여 내보내는 것"임을 명시적으로 드러냄.
+
+---
+
+## 5. 디미터의 법칙(Law of Demeter)과 기차 충돌 방지
+
+### 문제 상황
+- `Game` 클래스가 현재 위치한 방의 정보를 출력하기 위해 `player.currentRoom().name()`과 같이 객체의 내부 구조를 따라 여러 단계 깊숙이 접근함.
+- `Game`은 `Player`뿐만 아니라 `Room` 객체의 메서드까지 호출하게 되어, `Player`의 내부 구현(방 정보를 어떻게 관리하는지)에 강하게 결합됨.
+
+**수정 전 코드 (`Game.java`)**
+```java
+public void showRoom() {
+    // 기차 충돌(Train Wreck) 발생: 여러 개의 도트(.)를 따라 내부 객체를 헤집고 다님
+    // Game에게 Room은 '낯선 이(Stranger)'인데 직접 말을 걸고 있음
+    var room = player.currentRoom();
+    System.out.println("당신은 [" + room.name() + "]에 있습니다.");
+}
+```
+
+### 해결 방법
+1. **위임 메서드(Forwarding Method) 추가**: `Player` 클래스에 `currentRoomName()`, `currentRoomDescription()`과 같은 메서드를 추가하여 정보를 대신 전달하도록 함.
+2. **캡슐화 강화**: `Player.currentRoom()` 메서드를 `private`으로 변경하여 외부에서 `Room` 객체(낯선 이)에게 직접 접근할 수 없도록 차단함.
+
+**수정 후 코드 (`Player.java` / `Game.java`)**
+```java
+// Player.java: 낯선 이(Room)를 감추고 필요한 정보만 제공함
+private Room currentRoom() {
+    return worldMap.roomAt(position);
+}
+
+public String currentRoomName() {
+    return currentRoom().name(); // 위임(Forwarding)
+}
+
+// Game.java: 오직 친구(Player)에게만 말을 검
+public void showRoom() {
+    System.out.println("당신은 [" + player.currentRoomName() + "]에 있습니다.");
+}
+```
+
+### 결과 및 이점
+- **기차 충돌(Train Wreck) 해결**: 여러 개의 마침표(`.`)가 연결된 코드가 사라지고 단일 메시지 전송으로 변경되어 가독성이 높아짐.
+- **낯선 이(Stranger)와의 작별**: `Game`은 이제 `Room` 객체의 존재를 알 필요가 없으며, 오직 `Player`가 제공하는 인터페이스에만 의존함.
+- **결합도 감소**: `Room` 클래스의 메서드명이 변경되더라도 `Player` 내부만 수정하면 되며, `Game` 코드는 영향을 받지 않음.
+- **응집도 향상**: "현재 방 정보 제공"이라는 책임을 적절한 전문가(`Player`)에게 맡김으로써 객체 간의 역할 분담이 명확해짐.
+
+### 참고: 트레이드오프와 미들 맨(Middle Man)
+- **위임의 트레이드오프**: 디미터의 법칙을 준수하기 위해 위임 메서드(Forwarding Method)를 추가하면 결합도는 낮아지지만, 클래스 내 메서드 수가 늘어나고 코드가 복잡해질 수 있음.
+- **미들 맨(Middle Man) 악취**: 클래스의 대부분의 메서드가 단순히 다른 객체로 요청을 전달하기만 한다면, 이는 과도한 위임으로 인한 '미들 맨' 코드 악취에 해당함. 이 경우 위임을 제거하고 직접 소통하는 것이 나을 수도 있음.
+- **정보 전문가(Information Expert) 관점**: "현재 내가 어디에 있고, 그곳의 이름은 무엇인가?"라는 질문에 가장 잘 답할 수 있는 객체는 자신의 위치(`Position`)와 지형도(`WorldMap`)를 모두 알고 있는 `Player`임. 따라서 `Player`에게 이 책임을 할당하는 것은 객체 간의 결합도를 낮추는 동시에 응집도를 높이는 올바른 결정임.
