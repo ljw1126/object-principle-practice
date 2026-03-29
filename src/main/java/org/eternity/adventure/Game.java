@@ -77,12 +77,10 @@ public class Game {
     }
 
     public void tryMove(Direction direction) {
-        Position nexPosition = player.position().shift(direction);
-        if(player.worldMap().isBlocked(nexPosition)) {
-            showBlocked();
-        } else {
-            player.move(nexPosition);
+        if(player.move(direction)) {
             showRoom();
+        } else {
+            showBlocked();
         }
     }
 
