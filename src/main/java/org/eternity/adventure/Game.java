@@ -77,11 +77,13 @@ public class Game {
     }
 
     public void tryMove(Direction direction) {
-        if(player.move(direction)) {
+        if(player.canMove(direction)) {
+            player.move(direction);
             showRoom();
-        } else {
-            showBlocked();
-        }
+            return;
+        } 
+
+         showBlocked();
     }
 
     private void showPrompt() {

@@ -12,14 +12,17 @@ public class Player {
         this.position = position;
     }
 
-    public boolean move(Direction direction) {
-        Position nextPosition = position.shift(direction);
-        if(worldMap.isBlocked(nextPosition)) {
-            return false;
+    public void move(Direction direction) {
+        if(!canMove(direction)) {
+            throw new IllegalArgumentException();
         }
 
-        this.position = nextPosition;
-        return true;
+        this.position = position.shift(direction);
+    }
+
+    public boolean canMove(Direction direction) {
+        Position nextPosition = position.shift(direction);
+        return !worldMap.isBlocked(nextPosition);
     }
 
     public Position position() {
