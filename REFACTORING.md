@@ -161,3 +161,72 @@ private void executeCommand(Command command) {
 - **타입 안전성 확보**: 문자열 오타로 인한 런타임 오류가 줄어들고, `record`를 통해 명령어에 필요한 데이터(예: `Direction`)를 안전하게 전달함.
 - **유지보수성 증대**: 새로운 명령어 추가 시 `Command` 인터페이스에 하위 타입을 추가하고 `switch` 문에 `case`를 하나 더하는 것으로 충분하며, 컴파일러가 누락된 처리를 알려줌.
 - **객체지향과 함수형의 조화**: 객체지향의 캡슐화와 함수형의 대수적 데이터 타입(ADT) 장점을 결합하여, 데이터의 구조를 안전하게 보호하면서도 로직을 깔끔하게 분리할 수 있게 됨.
+
+---
+
+## 4. Switch Expression과 yield를 활용한 방어적 파싱
+
+### 문제 상황
+- `CommandParser`에서 사용자의 입력을 공백 단위로 분리(`split`)하여 명령어를 파싱할 때, 특정 명령어(예: `go`) 뒤에 추가 인자(방향)가 없는 경우 `ArrayIndexOutOfBoundsException`이 발생함.
+- `switch` 문 내에서 인자의 유효성을 검사하고 결과를 반환해야 하는 상황에서, 단순한 값 반환 이상의 로직(조건문 등)이 필요함.
+
+**수정 전 코드 (`CommandParser.java`)**
+```java
+private Command parseCommand(String[] commands) {
+    return switch (commands[0]) {
+        case "go" -> 
+            // commands[1] 접근 시 배열 크기가 1이면 예외 발생
+            switch (commands[1]) {
+                case "north" -> new Command.Move(Direction.NORTH);
+                // ...
+            };
+        // ...
+    };
+}
+```
+
+### 해결 방법
+1. **방어적 코드 추가**: `commands.length`를 체크하여 인자가 부족한 경우 즉시 `Command.Unknown()`을 반환하도록 개선함.
+2. **Switch 블록과 yield 사용**: `switch` 식(`Expression`)의 각 `case`에서 단순 값이 아닌 **로직 블록(`{ ... }`)**을 사용하고, 최종 결과를 `yield` 키워드로 반환함.
+
+### Java 21의 yield 키워드 이해
+- **역할**: `switch` 식 내의 코드 블록에서 최종적으로 반환할 값을 결정함. (일반적인 `return`은 메서드 자체를 종료시키지만, `yield`는 `switch` 식의 결과값만 결정함)
+- **사용 시점**:
+    - `case -> { ... }`와 같이 화살표 뒤에 **중괄호 블록**을 사용할 때.
+    - `case :`와 같은 **전통적인 콜론 문법**을 식(`Expression`)으로 사용할 때.
+
+**수정 후 코드 (`CommandParser.java`)**
+```java
+private Command parseCommand(String[] commands) {
+    // 1. 빈 입력 방어
+    if (commands.length == 0 || commands[0].isEmpty()) {
+        return new Command.Unknown();
+    }
+
+    return switch (commands[0]) {
+        case "go" -> {
+            // 2. 인자 개수 확인 (방어 로직)
+            if (commands.length < 2) {
+                yield new Command.Unknown(); // 블록 내 결과 반환
+            }
+            // 3. 중첩 switch의 결과를 다시 yield로 반환
+            yield switch (commands[1]) {
+                case "north" -> new Command.Move(Direction.NORTH);
+                case "south" -> new Command.Move(Direction.SOUTH);
+                case "east" -> new Command.Move(Direction.EAST);
+                case "west" -> new Command.Move(Direction.WEST);
+                default -> new Command.Unknown();
+            };
+        }
+        case "look" -> new Command.Look();
+        case "help" -> new Command.Help();
+        case "quit" -> new Command.Quit();
+        default -> new Command.Unknown();
+    };
+}
+```
+
+### 결과 및 이점
+- **안정성 강화**: 잘못된 입력(예: 단독 "go")에도 프로그램이 중단되지 않고 적절한 에러 커맨드(`Unknown`)를 생성함.
+- **표현력 향상**: `switch` 문 안에서 단순 매핑뿐만 아니라 필요한 검증 로직을 자연스럽게 녹여낼 수 있음.
+- **명확한 의도**: `yield`를 사용함으로써 "이 블록의 목적은 특정 값을 계산하여 내보내는 것"임을 명시적으로 드러냄.
