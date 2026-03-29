@@ -14,7 +14,7 @@ public class WeeklyPlan implements RecurringPlan {
     private Set<DayOfWeek> dayOfWeeks;
 
     public WeeklyPlan(Set<DayOfWeek> dayOfWeeks) {
-        this.dayOfWeeks = dayOfWeeks;
+        this.dayOfWeeks = new HashSet<>(dayOfWeeks);
     }
 
     @Override
