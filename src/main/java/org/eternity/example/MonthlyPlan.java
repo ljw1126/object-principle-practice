@@ -36,4 +36,13 @@ public class MonthlyPlan implements RecurringPlan {
          */
         return ((day.getDayOfMonth() - 1) / DAYS_IN_WEEK) + 1 == ordinal;
     }
+
+
+    @Override
+    public RecurringPlan reschedule(LocalDate day) {
+        return new MonthlyPlan(
+            ((day.getDayOfMonth() - 1) / DAYS_IN_WEEK) + 1,
+            day.getDayOfWeek()
+        );
+    }
 }

@@ -25,4 +25,8 @@ public class Schedule {
     public boolean includes(LocalDate day) {
         return plan.includes(day);
     }
+
+    public void reschedule(LocalDate day) {
+        this.plan = plan.reschedule(day);
+    }
 }
