@@ -4,15 +4,15 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 /**
- * 매월 특정 주차의 특정 요일에 반복되는 일정을 관리하는 클래스입니다.
- * 예: "매월 둘째 주 월요일", "매월 넷째 주 금요일" 등
+ * 매월 특정 요일의 n번째 반복되는 일정을 관리하는 클래스입니다.
+ * 예: "매월 첫 번째 월요일", "매월 세 번째 금요일" 등
  */
 public class MonthlyPlan implements RecurringPlan {
     private static final int DAYS_IN_WEEK = 7;
 
-    private Integer ordinal; // 해당 월의 n번째 요일 (매월 특정 주차의 특정 요일에 반복되는 일정 관리하기 하기 위한 값)
+    private Integer ordinal; // 해당 월의 n번째 요일 등장 횟수 (예: 1번째, 2번째 ...)
     private DayOfWeek dayOfWeek; // MONDAY ~ SUNDAY
- 
+
     public MonthlyPlan(Integer ordinal, DayOfWeek dayOfWeek) {
         this.ordinal = ordinal;
         this.dayOfWeek = dayOfWeek;
@@ -30,9 +30,9 @@ public class MonthlyPlan implements RecurringPlan {
         }
 
         /**
-         * n번째 주차 계산 시, 7의 배수(7, 14, 21, 28일)가 다음 주로 넘어가는 오류를 방지하기 위해 
+         * n번째 등장 횟수 계산 시, 7의 배수(7, 14, 21, 28일)가 다음 순번으로 넘어가는 오류를 방지하기 위해 
          * (day - 1)을 수행하여 0-based 인덱스로 변환 후 계산합니다.
-         * 예: 7일의 경우 (7-1)/7 + 1 = 1주차 (정상), 7/7 + 1 = 2주차 (오류)
+         * 예: 7일의 경우 (7-1)/7 + 1 = 1번째 (정상), 7/7 + 1 = 2번째 (오류)
          */
         return ((day.getDayOfMonth() - 1) / DAYS_IN_WEEK) + 1 == ordinal;
     }
