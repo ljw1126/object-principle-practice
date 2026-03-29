@@ -50,7 +50,7 @@ public class PlayerTest {
             Player player = new Player(worldMap, Position.of(1, 1));
 
             assertThat(player.canMove(Direction.EAST)).isFalse(); // (2,1) Room 없음
-            player.move(Direction.WEST);
+            player.move(Direction.EAST);
             fail();
         }catch (IllegalArgumentException ex) {}
     }
