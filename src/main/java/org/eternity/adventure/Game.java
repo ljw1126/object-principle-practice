@@ -113,7 +113,7 @@ public class Game {
     }
 
     public void showRoom() {
-        var room = player.worldMap().roomAt(player.position());
+        var room = player.currentRoom();
         System.out.println("당신은 [" + room.name() + "]에 있습니다.");
         System.out.println(room.description());
     }
