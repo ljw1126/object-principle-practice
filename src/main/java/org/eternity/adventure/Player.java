@@ -21,13 +21,21 @@ public class Player {
         this.position = nextPosition;
         return true;
     }
-    
+
     public Position position() {
         return position;
     }
 
-    public Room currentRoom() {
+    private Room currentRoom() {
         return worldMap.roomAt(position);
+    }
+
+    public String currentRoomName() {
+        return currentRoom().name();
+    }
+
+    public String currentRoomDescription() {
+        return currentRoom().description(); 
     }
 
     @Override

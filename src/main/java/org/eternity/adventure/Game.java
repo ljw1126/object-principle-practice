@@ -113,9 +113,8 @@ public class Game {
     }
 
     public void showRoom() {
-        var room = player.currentRoom();
-        System.out.println("당신은 [" + room.name() + "]에 있습니다.");
-        System.out.println(room.description());
+        System.out.println("당신은 [" + player.currentRoomName() + "]에 있습니다.");
+        System.out.println(player.currentRoomDescription());
     }
 
 }
