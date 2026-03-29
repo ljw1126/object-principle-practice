@@ -40,4 +40,16 @@ public class CommandParserTest {
         CommandParser parser = new CommandParser();
         assertThat(parser.parseCommand("help")).isEqualTo(new Command.Help());
     }
+
+    @Test
+    public void go_without_direction() {
+        CommandParser parser = new CommandParser();
+        assertThat(parser.parseCommand("go")).isEqualTo(new Command.Unknown());
+    }
+
+    @Test
+    public void unknown() {
+        CommandParser parser = new CommandParser();
+        assertThat(parser.parseCommand("hello")).isEqualTo(new Command.Unknown());
+    }
 }
