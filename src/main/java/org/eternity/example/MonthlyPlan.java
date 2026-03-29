@@ -25,6 +25,11 @@ public class MonthlyPlan implements RecurringPlan {
             return false;
         }
 
-        return (day.getDayOfMonth() / DAYS_IN_WEEK) + 1 == ordinal;
+        /**
+         * n번째 주차 계산 시, 7의 배수(7, 14, 21, 28일)가 다음 주로 넘어가는 오류를 방지하기 위해 
+         * (day - 1)을 수행하여 0-based 인덱스로 변환 후 계산합니다.
+         * 예: 7일의 경우 (7-1)/7 + 1 = 1주차 (정상), 7/7 + 1 = 2주차 (오류)
+         */
+        return ((day.getDayOfMonth() - 1) / DAYS_IN_WEEK) + 1 == ordinal;
     }
 }
