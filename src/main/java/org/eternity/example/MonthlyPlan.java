@@ -3,6 +3,10 @@ package org.eternity.example;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
+/**
+ * 매월 특정 주차의 특정 요일에 반복되는 일정을 관리하는 클래스입니다.
+ * 예: "매월 둘째 주 월요일", "매월 넷째 주 금요일" 등
+ */
 public class MonthlyPlan implements RecurringPlan {
     private static final int DAYS_IN_WEEK = 7;
 
