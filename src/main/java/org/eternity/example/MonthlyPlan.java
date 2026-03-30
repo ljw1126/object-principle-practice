@@ -10,8 +10,8 @@ import java.time.LocalDate;
 public class MonthlyPlan implements RecurringPlan {
     private static final int DAYS_IN_WEEK = 7;
 
-    private Integer ordinal; // 해당 월의 n번째 요일 등장 횟수 (예: 1번째, 2번째 ...)
-    private DayOfWeek dayOfWeek; // MONDAY ~ SUNDAY
+    private final Integer ordinal; // 해당 월의 n번째 요일 등장 횟수 (예: 1번째, 2번째 ...)
+    private final DayOfWeek dayOfWeek; // MONDAY ~ SUNDAY
 
     public MonthlyPlan(Integer ordinal, DayOfWeek dayOfWeek) {
         this.ordinal = ordinal;
@@ -35,5 +35,14 @@ public class MonthlyPlan implements RecurringPlan {
          * 예: 7일의 경우 (7-1)/7 + 1 = 1번째 (정상), 7/7 + 1 = 2번째 (오류)
          */
         return ((day.getDayOfMonth() - 1) / DAYS_IN_WEEK) + 1 == ordinal;
+    }
+
+
+    @Override
+    public RecurringPlan reschedule(LocalDate day) {
+        return new MonthlyPlan(
+            ((day.getDayOfMonth() - 1) / DAYS_IN_WEEK) + 1,
+            day.getDayOfWeek()
+        );
     }
 }

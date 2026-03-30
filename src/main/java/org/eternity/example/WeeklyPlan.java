@@ -2,6 +2,7 @@ package org.eternity.example;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -10,15 +11,22 @@ import java.util.Set;
  */
 public class WeeklyPlan implements RecurringPlan {
 
-    private Set<DayOfWeek> dayOfWeeks;
+    private final Set<DayOfWeek> dayOfWeeks;
 
     public WeeklyPlan(Set<DayOfWeek> dayOfWeeks) {
-        this.dayOfWeeks = dayOfWeeks;
+        this.dayOfWeeks = new HashSet<>(dayOfWeeks);
     }
 
     @Override
     public boolean includes(LocalDate day) {
          return dayOfWeeks.contains(day.getDayOfWeek()); // ordinal == null, 데일리 스크럼 일정 확인 로직 실행
+    }
+
+    @Override
+    public RecurringPlan reschedule(LocalDate day) {
+        var copy = new HashSet<>(dayOfWeeks);
+        copy.add(day.getDayOfWeek());
+        return new WeeklyPlan(copy);
     }
     
 }

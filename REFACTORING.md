@@ -230,3 +230,91 @@ private Command parseCommand(String[] commands) {
 - **안정성 강화**: 잘못된 입력(예: 단독 "go")에도 프로그램이 중단되지 않고 적절한 에러 커맨드(`Unknown`)를 생성함.
 - **표현력 향상**: `switch` 문 안에서 단순 매핑뿐만 아니라 필요한 검증 로직을 자연스럽게 녹여낼 수 있음.
 - **명확한 의도**: `yield`를 사용함으로써 "이 블록의 목적은 특정 값을 계산하여 내보내는 것"임을 명시적으로 드러냄.
+
+---
+
+## 5. 디미터의 법칙(Law of Demeter)과 기차 충돌 방지
+
+### 문제 상황
+- `Game` 클래스가 현재 위치한 방의 정보를 출력하기 위해 `player.currentRoom().name()`과 같이 객체의 내부 구조를 따라 여러 단계 깊숙이 접근함.
+- `Game`은 `Player`뿐만 아니라 `Room` 객체의 메서드까지 호출하게 되어, `Player`의 내부 구현(방 정보를 어떻게 관리하는지)에 강하게 결합됨.
+
+**수정 전 코드 (`Game.java`)**
+```java
+public void showRoom() {
+    // 기차 충돌(Train Wreck) 발생: 여러 개의 도트(.)를 따라 내부 객체를 헤집고 다님
+    // Game에게 Room은 '낯선 이(Stranger)'인데 직접 말을 걸고 있음
+    var room = player.currentRoom();
+    System.out.println("당신은 [" + room.name() + "]에 있습니다.");
+}
+```
+
+### 해결 방법
+1. **위임 메서드(Forwarding Method) 추가**: `Player` 클래스에 `currentRoomName()`, `currentRoomDescription()`과 같은 메서드를 추가하여 정보를 대신 전달하도록 함.
+2. **캡슐화 강화**: `Player.currentRoom()` 메서드를 `private`으로 변경하여 외부에서 `Room` 객체(낯선 이)에게 직접 접근할 수 없도록 차단함.
+
+**수정 후 코드 (`Player.java` / `Game.java`)**
+```java
+// Player.java: 낯선 이(Room)를 감추고 필요한 정보만 제공함
+private Room currentRoom() {
+    return worldMap.roomAt(position);
+}
+
+public String currentRoomName() {
+    return currentRoom().name(); // 위임(Forwarding)
+}
+
+// Game.java: 오직 친구(Player)에게만 말을 검
+public void showRoom() {
+    System.out.println("당신은 [" + player.currentRoomName() + "]에 있습니다.");
+}
+```
+
+### 결과 및 이점
+- **기차 충돌(Train Wreck) 해결**: 여러 개의 마침표(`.`)가 연결된 코드가 사라지고 단일 메시지 전송으로 변경되어 가독성이 높아짐.
+- **낯선 이(Stranger)와의 작별**: `Game`은 이제 `Room` 객체의 존재를 알 필요가 없으며, 오직 `Player`가 제공하는 인터페이스에만 의존함.
+- **결합도 감소**: `Room` 클래스의 메서드명이 변경되더라도 `Player` 내부만 수정하면 되며, `Game` 코드는 영향을 받지 않음.
+- **응집도 향상**: "현재 방 정보 제공"이라는 책임을 적절한 전문가(`Player`)에게 맡김으로써 객체 간의 역할 분담이 명확해짐.
+
+### 참고: 트레이드오프와 미들 맨(Middle Man)
+- **위임의 트레이드오프**: 디미터의 법칙을 준수하기 위해 위임 메서드(Forwarding Method)를 추가하면 결합도는 낮아지지만, 클래스 내 메서드 수가 늘어나고 코드가 복잡해질 수 있음.
+- **미들 맨(Middle Man) 악취**: 클래스의 대부분의 메서드가 단순히 다른 객체로 요청을 전달하기만 한다면, 이는 과도한 위임으로 인한 '미들 맨' 코드 악취에 해당함. 이 경우 위임을 제거하고 직접 소통하는 것이 나을 수도 있음.
+- **정보 전문가(Information Expert) 관점**: "현재 내가 어디에 있고, 그곳의 이름은 무엇인가?"라는 질문에 가장 잘 답할 수 있는 객체는 자신의 위치(`Position`)와 지형도(`WorldMap`)를 모두 알고 있는 `Player`임. 따라서 `Player`에게 이 책임을 할당하는 것은 객체 간의 결합도를 낮추는 동시에 응집도는 높이는 올바른 결정임.
+
+---
+
+## 6. 불변 객체와 계산 로직의 분리 (Command Query Separation)
+
+### 문제 상황
+- 일정 재설정(`reschedule`) 요구사항이 추가됨에 따라, `Schedule` 내의 `RecurringPlan` 상태를 변경해야 함.
+- 각 하위 타입(`MonthlyPlan`, `WeeklyPlan`)마다 재설정 로직(새로운 주차 계산, 요일 추가 등)이 다르기 때문에, 이를 `Schedule`에서 직접 처리하면 코드가 복잡해지고 응집도가 낮아짐.
+
+### 해결 방법
+1. **불변성 기반의 결과 반환**: `RecurringPlan.reschedule()` 메서드가 자신의 상태를 직접 바꾸는 대신, 계산된 결과를 바탕으로 **새로운 계획 객체**를 생성하여 반환하도록 설계함.
+2. **명령과 쿼리의 분리(CQS)**: 
+    - `RecurringPlan`: 새로운 상태를 계산하여 반환하는 **쿼리(Query)** 역할에 집중함. (부수 효과 없음)
+    - `Schedule`: 반환된 결과를 받아 자신의 필드를 업데이트하는 **명령(Command)** 역할을 수행함.
+
+**수정 후 코드 (`RecurringPlan.java` / `Schedule.java`)**
+```java
+// MonthlyPlan.java: 자신의 상태를 바꾸지 않고 새 객체를 반환 (불변성 유지)
+@Override
+public RecurringPlan reschedule(LocalDate day) {
+    return new MonthlyPlan(
+        ((day.getDayOfMonth() - 1) / 7) + 1,
+        day.getDayOfWeek()
+    );
+}
+
+// Schedule.java: 계산된 결과를 받아 상태를 업데이트함
+public void reschedule(LocalDate day) {
+    this.plan = plan.reschedule(day);
+}
+```
+
+### 결과 및 이점
+- **부수 효과(Side Effect) 제어**: 계획 객체들이 불변(Immutable) 상태를 유지하므로, 의도치 않은 상태 변경으로 인한 버그를 방지하고 로직 추적이 쉬워짐.
+- **단일 책임 원칙(SRP) 강화**: 각 계획 클래스는 "어떻게 재설정할 것인가"라는 비즈니스 로직에만 집중하고, `Schedule`은 전체적인 일정의 상태 관리라는 책임에 집중함.
+- **테스트 용이성 향상**: `MonthlyPlan`이나 `WeeklyPlan`의 재설정 로직을 테스트할 때, 복잡한 `Schedule` 객체 없이도 독립적으로 입력과 출력(새 객체)을 검증할 수 있음.
+- **확장성 확보**: 이전 상태의 `plan` 객체를 별도로 보관하기 쉬워져, 향후 '변경 취소(Undo)' 기능을 구현하기에 유리한 구조가 됨.
+

@@ -5,6 +5,7 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +30,19 @@ public class ScheduleTest {
                 new WeeklyPlan(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)));
 
         assertThat(schedule.includes(LocalDate.of(2024, 7, 8))).isTrue();
+    }
+
+    @Test
+    public void reschedule() {
+        Schedule schedule = new Schedule(
+                "미팅", LocalTime.of(13, 0), Duration.ofHours(1),
+                new WeeklyPlan(new HashSet<>(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY))));
+
+        LocalDate date = LocalDate.of(2024, 7, 3);
+        if (!schedule.includes(date)) {
+            schedule.reschedule(date);
+        }
+
+        assertThat(schedule.includes(date)).isTrue();
     }
 }
