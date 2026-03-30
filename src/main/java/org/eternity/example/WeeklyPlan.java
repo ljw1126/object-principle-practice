@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class WeeklyPlan implements RecurringPlan {
 
-    private Set<DayOfWeek> dayOfWeeks;
+    private final Set<DayOfWeek> dayOfWeeks;
 
     public WeeklyPlan(Set<DayOfWeek> dayOfWeeks) {
         this.dayOfWeeks = new HashSet<>(dayOfWeeks);
