@@ -12,10 +12,8 @@ public class GameTest {
     @Test
     public void contains_welcome() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("quit\n".getBytes()));
-
-        Game game = new Game(new Console());
+        
+        Game game = createGame(output, "quit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -29,10 +27,8 @@ public class GameTest {
     @Test
     public void move_north_passed() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("go north\nquit\n".getBytes()));
-
-        Game game = new Game(new Console());
+        
+        Game game = createGame(output, "go north\nquit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -45,10 +41,8 @@ public class GameTest {
     @Test
     public void move_north_blocked() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("go north\ngo north\ngo north\nquit\n".getBytes()));
-
-        Game game = new Game(new Console());
+        
+        Game game = createGame(output, "go north\ngo north\ngo north\nquit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -64,10 +58,8 @@ public class GameTest {
     @Test
     public void move_east_passed() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("go east\nquit\n".getBytes()));
-
-        Game game = new Game(new Console());
+        
+        Game game = createGame(output, "go east\nquit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -80,10 +72,8 @@ public class GameTest {
     @Test
     public void move_east_blocked() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("go east\ngo east\nquit\n".getBytes()));
-
-        Game game = new Game(new Console());
+        
+        Game game = createGame(output, "go east\ngo east\nquit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -97,10 +87,8 @@ public class GameTest {
     @Test
     public void move_south_passed() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("go north\ngo south\nquit\n".getBytes()));
-
-        Game game = new Game(new Console());
+        
+        Game game = createGame(output, "go north\ngo south\nquit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -115,10 +103,8 @@ public class GameTest {
     @Test
     public void move_south_blocked() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("go south\nquit\n".getBytes()));
-
-        Game game = new Game(new Console());
+        
+        Game game = createGame(output, "go south\nquit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -130,10 +116,8 @@ public class GameTest {
     @Test
     public void move_west_passed() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("go east\ngo west\nquit\n".getBytes()));
-
-        Game game = new Game(new Console());
+        
+        Game game = createGame(output, "go east\ngo west\nquit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -148,10 +132,8 @@ public class GameTest {
     @Test
     public void move_west_blocked() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("go west\nquit\n".getBytes()));
 
-        Game game = new Game(new Console());
+        Game game = createGame(output, "go west\nquit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -163,10 +145,8 @@ public class GameTest {
     @Test
     public void move_empty() {
         OutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
-        System.setIn(new ByteArrayInputStream("go north\ngo north\ngo east\nquit\n".getBytes()));
 
-        Game game = new Game(new Console());
+        Game game = createGame(output, "go north\ngo north\ngo east\nquit\n");
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -177,5 +157,12 @@ public class GameTest {
                 "> 이동할 수 없습니다.",
                 "> ",
                 "게임을 종료합니다.");
+    }
+
+    private Game createGame(OutputStream output, String input) {
+        System.setOut(new PrintStream(output));
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        return new Game(new Console());
     }
 }
