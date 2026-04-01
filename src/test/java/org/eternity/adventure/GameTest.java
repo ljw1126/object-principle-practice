@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import org.eternity.adventure.console.Console;
 import org.junit.jupiter.api.Test;
 
 public class GameTest {
@@ -14,7 +15,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("quit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -31,7 +32,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("go north\nquit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -47,7 +48,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("go north\ngo north\ngo north\nquit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -66,7 +67,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("go east\nquit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -82,7 +83,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("go east\ngo east\nquit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -99,7 +100,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("go north\ngo south\nquit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -117,7 +118,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("go south\nquit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -132,7 +133,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("go east\ngo west\nquit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -150,7 +151,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("go west\nquit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
@@ -165,7 +166,7 @@ public class GameTest {
         System.setOut(new PrintStream(output));
         System.setIn(new ByteArrayInputStream("go north\ngo north\ngo east\nquit\n".getBytes()));
 
-        Game game = new Game();
+        Game game = new Game(new Console());
         game.run();
 
         assertThat(output.toString().split("\n")).containsSequence(
