@@ -9,8 +9,9 @@ public class Game {
     private Player player;
     private CommandParser commandParser;
     private boolean running;
-    
-    public Game() {
+    private InputOutput io;
+
+    public Game(InputOutput io) {
         this.player = new Player(
             new WorldMap(
                 Size.with(2, 3), 
@@ -22,6 +23,7 @@ public class Game {
             ), 
             Position.of(0, 2));
         this.commandParser = new CommandParser();
+        this.io = io;
     }
 
     public void run() {
@@ -87,11 +89,11 @@ public class Game {
     }
 
     private void showPrompt() {
-        System.out.print("> ");
+        io.show("> ");
     }
 
     private void showUnknownCommand() {
-        System.out.println("이해할 수 없는 명령어입니다.");
+        io.showLine("이해할 수 없는 명령어입니다.");
     }
 
     private void start() {
@@ -99,7 +101,7 @@ public class Game {
     }
 
     private boolean isRunning() {
-        return this.running == true;
+        return this.running;
     }
 
     private void stop() {
@@ -107,16 +109,16 @@ public class Game {
     }
 
     private void farewell() {
-        System.out.println("\n게임을 종료합니다.");
+        io.showLine("\n게임을 종료합니다.");
     }
 
     public void showBlocked() {
-        System.out.println("이동할 수 없습니다.");
+        io.showLine("이동할 수 없습니다.");
     }
 
     public void showRoom() {
-        System.out.println("당신은 [" + player.currentRoomName() + "]에 있습니다.");
-        System.out.println(player.currentRoomDescription());
+        io.showLine("당신은 [" + player.currentRoomName() + "]에 있습니다.");
+        io.showLine(player.currentRoomDescription());
     }
 
 }
