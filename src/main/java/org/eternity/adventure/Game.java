@@ -1,6 +1,5 @@
 package org.eternity.adventure;
 
-import java.util.Scanner;
 import org.eternity.adventure.constant.Direction;
 
 public class Game {
@@ -28,33 +27,27 @@ public class Game {
     }
 
     private void showGreetings() {
-        System.out.println("환영합니다!");
+        io.showLine("환영합니다!");
     }
 
     private void showHelp() {
-        System.out.println("다음 명령어를 사용할 수 있습니다.");
-        System.out.println("go {north|east|south|west} - 이동, look - 보기, help - 도움말, quit - 게임 종료");
+        io.showLine("다음 명령어를 사용할 수 있습니다.");
+        io.showLine("go {north|east|south|west} - 이동, look - 보기, help - 도움말, quit - 게임 종료");
     }
 
     private void play() {
-        Scanner scanner = new Scanner(System.in);
-        
         start();
         
         while (isRunning()) {
-            String input = inputCommand(scanner);
+            String input = inputCommand();
             Command command = commandParser.parseCommand(input);
             executeCommand(command);
         }
     }
 
-    private String inputCommand(Scanner scanner) {
+    private String inputCommand() {
         showPrompt();
-        return input(scanner);
-    }
-
-    private String input(Scanner scanner) {
-        return scanner.nextLine();
+        return io.input();
     }
 
     private void executeCommand(Command command) {
