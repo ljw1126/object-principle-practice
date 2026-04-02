@@ -5,7 +5,7 @@ import java.util.List;
 import org.eternity.adventure.InputOutput;
 
 public class FakeInputOutput implements InputOutput{
-    int currentInput;
+    private int currentInput;
     private List<String> inputs;
     private StringBuilder outputs;
 
