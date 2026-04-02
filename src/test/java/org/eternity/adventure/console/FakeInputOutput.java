@@ -1,6 +1,5 @@
 package org.eternity.adventure.console;
 
-import java.util.Arrays;
 import java.util.List;
 import org.eternity.adventure.InputOutput;
 
@@ -16,7 +15,7 @@ public class FakeInputOutput implements InputOutput{
     }
 
     public List<String> outputs() {
-        return Arrays.asList(outputs.toString().split("\n"));
+        return outputs.toString().lines().toList();
     }
 
     @Override
