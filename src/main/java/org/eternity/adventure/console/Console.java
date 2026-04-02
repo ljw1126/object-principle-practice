@@ -12,7 +12,7 @@ public class Console implements InputOutput {
 
     @Override
     public String input() {
-        return scanner.nextLine().toLowerCase().trim();
+        return scanner.nextLine();
     }
 
     @Override
