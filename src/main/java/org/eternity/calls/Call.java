@@ -17,6 +17,10 @@ public class Call {
         return from;
     }
 
+    public String to() {
+        return to;
+    }
+
     public Duration duration() {
         return callTime.duration();
     }

@@ -14,7 +14,9 @@ public class CallHistory {
     }
 
     public void append(Call call) {
-        calls.add(call);
+        if(call.from().equals(phone)) {
+            calls.add(call);
+        }
     }
     
     public String phone() {

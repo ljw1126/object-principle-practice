@@ -9,11 +9,7 @@ public class CallCollector {
 
     public CallHistory collect(String phone) {
         CallHistory callHistory = new CallHistory(phone);
-        for (Call call : reader.read()) {
-            if (call.from().equals(phone)) {
-                callHistory.append(call);
-            }
-        }
+        reader.read().forEach(callHistory::append);
         return callHistory;
     }
 }
