@@ -1,4 +1,4 @@
-package org.eternity.call;
+package org.eternity.calls;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

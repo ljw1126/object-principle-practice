@@ -1,4 +1,4 @@
-package org.eternity.call;
+package org.eternity.calls;
 
 public class CallCollector {
     private Reader reader;

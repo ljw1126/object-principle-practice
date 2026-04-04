@@ -1,20 +1,18 @@
-package org.eternity.call.reader;
+package org.eternity.reader;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.eternity.call.Call;
-import org.eternity.call.Reader;
-import org.eternity.call.TimeInterval;
+import org.eternity.calls.AbstractReader;
+import org.eternity.calls.Call;
+import org.eternity.calls.TimeInterval;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-public class JsonReader implements Reader {
-    private String path;
-
+public class JsonReader extends AbstractReader {
     public JsonReader(String path) {
-        this.path = path;
+        super(path);
     }
 
     public record CallHistoryRecord(List<CallRecord> calls) {
@@ -22,20 +20,7 @@ public class JsonReader implements Reader {
     }
 
     @Override
-    public List<Call> read() {
-        List<String> lines = readLines(path);
-        return parse(lines);
-    }
-
-    private List<String> readLines(String path) {
-        try {
-            return java.nio.file.Files.readAllLines(java.nio.file.Path.of(path));
-        } catch (java.io.IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private List<Call> parse(List<String> lines) {
+    protected List<Call> parse(List<String> lines) {
         CallHistoryRecord history = parseJson(lines);
         return history.calls().stream()
                 .map(call -> new Call(call.from, call.to, TimeInterval.of(call.start, call.end))).collect(Collectors.toList());
