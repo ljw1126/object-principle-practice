@@ -1,47 +1,20 @@
 package org.eternity.adventure;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 import org.eternity.adventure.constant.Direction;
 import org.eternity.adventure.item.Carrier;
-import org.eternity.adventure.item.Item;
+import org.eternity.adventure.item.ForwardingCarrier;
 import org.eternity.adventure.vo.Position;
 
-public class Player implements Carrier{
+public class Player extends ForwardingCarrier{
     private WorldMap worldMap;
     private Position position;
-    private List<Item> items = new ArrayList<>();
 
-    public Player(WorldMap worldMap, Position position, Item... items) {
-        this.worldMap = worldMap;
-        this.position = position;
-        this.items.addAll(List.of(items));
+    public Player(WorldMap worldMap, Position position, Carrier carrier) {
+         super(carrier);
+         this.worldMap = worldMap;
+         this.position = position;
     }
-
-    @Override
-    public List<Item> items() {
-        return Collections.unmodifiableList(items);
-    }
-
-    @Override
-    public void add(Item item) {
-        items.add(item);
-    }
-
-    @Override
-    public Optional<Item> find(String itemName) {
-        return items.stream()
-            .filter(item -> item.name().equalsIgnoreCase(itemName))
-            .findFirst();
-    }
-
-    @Override
-    public void remove(Item item) {
-        items.remove(item);
-    }
-
+    
     public void move(Direction direction) {
         if(!canMove(direction)) {
             throw new IllegalArgumentException();
