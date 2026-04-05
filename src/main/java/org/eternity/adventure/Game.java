@@ -138,13 +138,13 @@ public class Game {
                 itemName + "을(를) 버릴 수 없습니다.");
     }
 
-    private void transfer(Carrier source, Carrier target, String itemName, String success, String fail) {
-        source.find(itemName).ifPresentOrElse(
-            item -> {
-                source.remove(item);
-                target.add(item);
-                io.showLine(success);
-            }, 
-            () -> io.showLine(fail));
+    private void transfer(Carrier source, Carrier target, 
+        String itemName, String successMessage, String failureMessage) {
+        if (new Transfer(source, target, itemName).transfer()) {
+            io.showLine(successMessage);
+            return;
+        } 
+
+        io.showLine(failureMessage);
     }
 }
