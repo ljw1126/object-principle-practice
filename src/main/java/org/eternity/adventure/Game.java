@@ -1,5 +1,6 @@
 package org.eternity.adventure;
 
+import java.util.stream.Collectors;
 import org.eternity.adventure.constant.Direction;
 
 public class Game {
@@ -57,6 +58,9 @@ public class Game {
             case Command.Help() -> showHelp();
             case Command.Quit() -> stop();
             case Command.Unknown() -> showUnknownCommand();
+            case Command.Inventory() -> showInventory();
+            case Command.Take take -> takeItem(take.item()); // item()은 Command.Take record의 필드입니다.
+            case Command.Drop drop -> dropItem(drop.item());
         }
     }
 
@@ -101,6 +105,44 @@ public class Game {
     public void showRoom() {
         io.showLine("당신은 [" + player.currentRoomName() + "]에 있습니다.");
         io.showLine(player.currentRoomDescription());
+        if(!player.currentRoom().items().isEmpty()) {
+            io.showLine(player.currentRoom().items().stream()
+                    .map(Item::name)
+                    .collect(Collectors.joining(", ", "아이템: [ ", " ]")));
+        }
     }
 
+    private void showInventory() {
+        io.showLine(
+            player.items().stream()
+                .map(Item::name)
+                .collect(Collectors.joining(", ", "인벤토리 목록: [", " ]"))
+        );
+    }
+
+    private void takeItem(String itemName) {
+        transfer(player.currentRoom(), 
+                 player, 
+                 itemName, 
+                 itemName + "을(를) 얻었습니다.", 
+                 itemName + "을(를) 얻을 수 없습니다.");
+    }
+
+    private void dropItem(String itemName) {
+        transfer(player, 
+                player.currentRoom(), 
+                itemName, 
+                itemName + "을(를) 버렸습니다.", 
+                itemName + "을(를) 버릴 수 없습니다.");
+    }
+
+    private void transfer(Player source, Player target, String itemName, String success, String fail) {
+        source.find(itemName).ifPresentOrElse(
+            item -> {
+                source.remove(item);
+                target.add(item);
+                io.showLine(success);
+            }, 
+            () -> io.showLine(fail));
+    }
 }

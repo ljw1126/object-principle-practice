@@ -11,7 +11,7 @@ public class WorldMap {
         this.size = size;
         this.rooms = new Room[size.area()];
         for(Room room : rooms) {
-            this.rooms[room.indexIn(size)] = room;
+            this.rooms[size.indexOf(room.position())] = room;
         }
     }
 
