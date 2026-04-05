@@ -2,14 +2,15 @@ package org.eternity.calls;
 
 import java.time.Duration;
 
-public class BillingCallCollector extends CallCollector {
-    public BillingCallCollector(Reader reader) {
-        super(reader);
+public class BillingCallCollector {
+    private CallCollector callCollector;
+
+    public BillingCallCollector(CallCollector callCollector) {
+        this.callCollector = callCollector;
     }
 
-    @Override
     public CallHistory collect(String phone) {
-        CallHistory callHistory = super.collect(phone);
+        CallHistory callHistory = callCollector.collect(phone);
         
         CallHistory result = new CallHistory(phone);
         for(Call call : callHistory.calls()) {
