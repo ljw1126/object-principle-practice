@@ -1,7 +1,7 @@
 package org.eternity.adventure;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import org.eternity.adventure.constant.Direction;
 import org.eternity.adventure.vo.Position;
 import org.eternity.adventure.vo.Size;
@@ -33,8 +33,7 @@ public class PlayerTest {
             Player player = new Player(worldMap, Position.of(1, 1));
 
             assertThat(player.canMove(Direction.WEST)).isFalse();
-            Assertions.assertThatThrownBy(() -> player.move(Direction.WEST))
-                .isInstanceOf(IllegalArgumentException.class);
+            assertThatIllegalArgumentException().isThrownBy(() -> player.move(Direction.WEST));
     }
 
     @Test
@@ -47,7 +46,6 @@ public class PlayerTest {
             Player player = new Player(worldMap, Position.of(1, 1));
 
             assertThat(player.canMove(Direction.EAST)).isFalse(); // (2,1) Room 없음
-            Assertions.assertThatThrownBy(() -> player.move(Direction.EAST))
-                .isInstanceOf(IllegalArgumentException.class);
+            assertThatIllegalArgumentException().isThrownBy(() -> player.move(Direction.EAST));
     }
 }
