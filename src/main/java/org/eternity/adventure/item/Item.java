@@ -1,4 +1,4 @@
-package org.eternity.adventure;
+package org.eternity.adventure.item;
 
 public class Item {
     private final String name;
