@@ -2,6 +2,8 @@ package org.eternity.adventure;
 
 import java.util.stream.Collectors;
 import org.eternity.adventure.constant.Direction;
+import org.eternity.adventure.item.Carrier;
+import org.eternity.adventure.item.Item;
 
 public class Game {
     private Player player;
@@ -136,7 +138,7 @@ public class Game {
                 itemName + "을(를) 버릴 수 없습니다.");
     }
 
-    private void transfer(Player source, Player target, String itemName, String success, String fail) {
+    private void transfer(Carrier source, Carrier target, String itemName, String success, String fail) {
         source.find(itemName).ifPresentOrElse(
             item -> {
                 source.remove(item);

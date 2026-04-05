@@ -2,6 +2,7 @@ package org.eternity.adventure;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.eternity.adventure.console.FakeInputOutput;
+import org.eternity.adventure.item.Item;
 import org.eternity.adventure.vo.Position;
 import org.eternity.adventure.vo.Size;
 import org.junit.jupiter.api.Test;
