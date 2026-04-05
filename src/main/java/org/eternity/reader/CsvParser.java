@@ -3,17 +3,14 @@ package org.eternity.reader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import org.eternity.calls.AbstractReader;
 import org.eternity.calls.Call;
+import org.eternity.calls.Parser;
 import org.eternity.calls.TimeInterval;
 
-public class CsvReader extends AbstractReader {
-    public CsvReader(String path) {
-        super(path);
-    }
+public class CsvParser implements Parser{
 
     @Override
-    protected List<Call> parse(List<String> lines) {
+    public List<Call> parse(List<String> lines) {
         return lines.stream().map(this::parseCall).toList();
     }
 
