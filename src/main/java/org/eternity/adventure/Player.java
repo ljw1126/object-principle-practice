@@ -3,11 +3,16 @@ package org.eternity.adventure;
 import org.eternity.adventure.constant.Direction;
 import org.eternity.adventure.item.Carrier;
 import org.eternity.adventure.item.ForwardingCarrier;
+import org.eternity.adventure.item.Inventory;
 import org.eternity.adventure.vo.Position;
 
 public class Player extends ForwardingCarrier{
     private WorldMap worldMap;
     private Position position;
+
+    public Player(WorldMap worldMap, Position position) {
+        this(worldMap, position, new Inventory());
+    }
 
     public Player(WorldMap worldMap, Position position, Carrier carrier) {
          super(carrier);

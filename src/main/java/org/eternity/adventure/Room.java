@@ -2,12 +2,17 @@ package org.eternity.adventure;
 
 import org.eternity.adventure.item.Carrier;
 import org.eternity.adventure.item.ForwardingCarrier;
+import org.eternity.adventure.item.Inventory;
 import org.eternity.adventure.vo.Position;
 
 public class Room extends ForwardingCarrier {
     private String name;
     private String description;
     private Position position;
+
+    public Room(Position position, String name, String description) {
+        this(position, name, description, new Inventory());
+    }
 
     public Room(Position position, String name, String description, Carrier carrier) {
         super(carrier);
