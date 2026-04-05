@@ -1,9 +1,12 @@
 package org.eternity.adventure;
 
 import java.util.stream.Collectors;
-import org.eternity.adventure.constant.Direction;
-import org.eternity.adventure.item.Carrier;
-import org.eternity.adventure.item.Item;
+import org.eternity.adventure.game.command.Command;
+import org.eternity.adventure.game.command.CommandParser;
+import org.eternity.adventure.game.item.Carrier;
+import org.eternity.adventure.game.item.Item;
+import org.eternity.adventure.game.player.Player;
+import org.eternity.adventure.game.worldmap.Direction;
 
 public class Game {
     private Player player;

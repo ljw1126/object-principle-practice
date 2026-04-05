@@ -1,4 +1,4 @@
-package org.eternity.adventure.item;
+package org.eternity.adventure.game.item;
 
 import java.util.ArrayList;
 import java.util.Collections;

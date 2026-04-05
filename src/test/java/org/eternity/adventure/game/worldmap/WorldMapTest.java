@@ -1,8 +1,6 @@
-package org.eternity.adventure;
+package org.eternity.adventure.game.worldmap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.eternity.adventure.vo.Position;
-import org.eternity.adventure.vo.Size;
 import org.junit.jupiter.api.Test;
 
 public class WorldMapTest {

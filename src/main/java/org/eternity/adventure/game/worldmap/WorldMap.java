@@ -1,7 +1,4 @@
-package org.eternity.adventure;
-
-import org.eternity.adventure.vo.Position;
-import org.eternity.adventure.vo.Size;
+package org.eternity.adventure.game.worldmap;
 
 public class WorldMap {
     private Size size;

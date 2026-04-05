@@ -1,6 +1,6 @@
-package org.eternity.adventure;
+package org.eternity.adventure.game.command;
 
-import org.eternity.adventure.constant.Direction;
+import org.eternity.adventure.game.worldmap.Direction;
 
 /**
  * Java 17 이상에서 도입된 sealed 인터페이스입니다.

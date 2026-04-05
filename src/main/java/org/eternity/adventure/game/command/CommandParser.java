@@ -1,6 +1,6 @@
-package org.eternity.adventure;
+package org.eternity.adventure.game.command;
 
-import org.eternity.adventure.constant.Direction;
+import org.eternity.adventure.game.worldmap.Direction;
 
 public class CommandParser {
     public Command parseCommand(String input) {

@@ -2,10 +2,14 @@ package org.eternity.adventure;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.eternity.adventure.console.FakeInputOutput;
-import org.eternity.adventure.item.Inventory;
-import org.eternity.adventure.item.Item;
-import org.eternity.adventure.vo.Position;
-import org.eternity.adventure.vo.Size;
+import org.eternity.adventure.game.command.CommandParser;
+import org.eternity.adventure.game.item.Inventory;
+import org.eternity.adventure.game.item.Item;
+import org.eternity.adventure.game.player.Player;
+import org.eternity.adventure.game.worldmap.Position;
+import org.eternity.adventure.game.worldmap.Room;
+import org.eternity.adventure.game.worldmap.Size;
+import org.eternity.adventure.game.worldmap.WorldMap;
 import org.junit.jupiter.api.Test;
 
 public class GameTest {

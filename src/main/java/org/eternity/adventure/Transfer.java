@@ -1,6 +1,6 @@
 package org.eternity.adventure;
 
-import org.eternity.adventure.item.Carrier;
+import org.eternity.adventure.game.item.Carrier;
 
 public class Transfer {
     private Carrier source;
