@@ -27,10 +27,6 @@ public class Transfer {
     }
     
     public void perform() {
-        source.find(itemName).ifPresent(
-            item -> {
-                source.remove(item);
-                target.add(item);     
-        });
+        transfer();
     }
 }
