@@ -16,6 +16,6 @@ public class RedisReader extends AbstractReader {
     @Override
     protected List<String> readLines(String path) {
         String json = redisClient.get(path);
-        return List.of(json.split("\n"));
+        return json == null ? List.of() : List.of(json.split("\n"));
     }
 }
