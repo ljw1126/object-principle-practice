@@ -8,7 +8,7 @@ import org.eternity.adventure.game.worldmap.Position;
 import org.eternity.adventure.game.worldmap.Room;
 import org.eternity.adventure.game.worldmap.WorldMap;
 
-public class Player extends ForwardingCarrier{
+public class Player extends ForwardingCarrier {
     private WorldMap worldMap;
     private Position position;
 
@@ -49,5 +49,9 @@ public class Player extends ForwardingCarrier{
 
     public String currentRoomDescription() {
         return currentRoom().description(); 
+    }
+
+    public boolean currentRoomHasItems() {
+        return currentRoom().hasItems();
     }
 }

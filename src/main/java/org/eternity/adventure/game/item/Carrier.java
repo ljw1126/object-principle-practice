@@ -8,4 +8,5 @@ public interface Carrier {
     Optional<Item> find(String itemName);
     void add(Item item);
     void remove(Item item);
+    boolean hasItems();
 }

@@ -34,4 +34,8 @@ public class Inventory implements Carrier {
         items.remove(item);
     }
     
+    @Override
+    public boolean hasItems() {
+        return !items.isEmpty();
+    }
 }

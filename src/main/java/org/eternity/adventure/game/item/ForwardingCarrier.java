@@ -3,7 +3,7 @@ package org.eternity.adventure.game.item;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ForwardingCarrier implements Carrier{
+public abstract class ForwardingCarrier implements Carrier {
     private Carrier carrier;
 
     protected ForwardingCarrier(Carrier carrier) {
@@ -28,5 +28,10 @@ public abstract class ForwardingCarrier implements Carrier{
     @Override
     public void remove(Item item) {
         carrier.remove(item);
+    }
+
+    @Override
+    public boolean hasItems() {
+        return !items().isEmpty();
     }
 }

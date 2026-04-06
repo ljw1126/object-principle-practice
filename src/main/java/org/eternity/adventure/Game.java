@@ -110,7 +110,7 @@ public class Game {
     public void showRoom() {
         io.showLine("당신은 [" + player.currentRoomName() + "]에 있습니다.");
         io.showLine(player.currentRoomDescription());
-        if(!player.currentRoom().items().isEmpty()) {
+        if(player.currentRoomHasItems()) {
             io.showLine(player.currentRoom().items().stream()
                     .map(Item::name)
                     .collect(Collectors.joining(", ", "아이템: [ ", " ]")));
