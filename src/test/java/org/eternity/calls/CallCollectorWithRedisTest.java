@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.time.Duration;
 import org.eternity.reader.CsvParser;
 import org.eternity.reader.JsonParser;
-import org.eternity.reader.RedisReader;
+import org.eternity.reader.RedisLineReader;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +53,7 @@ public class CallCollectorWithRedisTest {
         setupRedisData(key, value);
 
         CallCollector callCollector = new CallCollector(
-                new RedisReader("phone:calls:json", new JsonParser(), redisClient));
+                new DefaultReader("phone:calls:json", new JsonParser(), new RedisLineReader(redisClient)));
 
         CallHistory history = callCollector.collect("010-1111-2222");
 
@@ -74,7 +74,7 @@ public class CallCollectorWithRedisTest {
         setupRedisData(key, value);
 
         CallCollector callCollector = new CallCollector(
-                new RedisReader("phone:calls:csv", new CsvParser(), redisClient));
+                new DefaultReader("phone:calls:csv", new CsvParser(), new RedisLineReader(redisClient)));
 
         CallHistory history = callCollector.collect("010-1111-2222");
 
