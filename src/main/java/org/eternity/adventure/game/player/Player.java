@@ -3,6 +3,7 @@ package org.eternity.adventure.game.player;
 import org.eternity.adventure.game.item.Carrier;
 import org.eternity.adventure.game.item.ForwardingCarrier;
 import org.eternity.adventure.game.item.Inventory;
+import org.eternity.adventure.game.item.ItemFormatter;
 import org.eternity.adventure.game.worldmap.Direction;
 import org.eternity.adventure.game.worldmap.Position;
 import org.eternity.adventure.game.worldmap.Room;
@@ -53,5 +54,16 @@ public class Player extends ForwardingCarrier {
 
     public boolean currentRoomHasItems() {
         return currentRoom().hasItems();
+    }
+
+    // 플레이어에게 현재 방의 아이템 설명을 물어봄 (Ask가 아닌 Tell)
+    public String currentRoomItemsDescription() {
+        return currentRoom().itemsDescription();
+    }
+
+    // 플레이어에게 현재 인벤토리 목록 설명을 물어봄
+    // "자신을 설명하는 문자열을 반환"할 뿐, UI 관련 인터페이스에 의존하지 않는다.
+    public String inventoryDescription() { 
+        return ItemFormatter.format("인벤토리 목록", items());
     }
 }

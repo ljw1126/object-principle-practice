@@ -1,10 +1,8 @@
 package org.eternity.adventure;
 
-import java.util.stream.Collectors;
 import org.eternity.adventure.game.command.Command;
 import org.eternity.adventure.game.command.CommandParser;
 import org.eternity.adventure.game.item.Carrier;
-import org.eternity.adventure.game.item.Item;
 import org.eternity.adventure.game.player.Player;
 import org.eternity.adventure.game.worldmap.Direction;
 
@@ -111,18 +109,12 @@ public class Game {
         io.showLine("당신은 [" + player.currentRoomName() + "]에 있습니다.");
         io.showLine(player.currentRoomDescription());
         if(player.currentRoomHasItems()) {
-            io.showLine(player.currentRoom().items().stream()
-                    .map(Item::name)
-                    .collect(Collectors.joining(", ", "아이템: [ ", " ]")));
+            io.showLine(player.currentRoomItemsDescription());
         }
     }
 
     private void showInventory() {
-        io.showLine(
-            player.items().stream()
-                .map(Item::name)
-                .collect(Collectors.joining(", ", "인벤토리 목록: [", " ]"))
-        );
+        io.showLine(player.inventoryDescription());
     }
 
     private void takeItem(String itemName) {

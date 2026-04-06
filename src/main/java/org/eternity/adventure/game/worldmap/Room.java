@@ -3,6 +3,7 @@ package org.eternity.adventure.game.worldmap;
 import org.eternity.adventure.game.item.Carrier;
 import org.eternity.adventure.game.item.ForwardingCarrier;
 import org.eternity.adventure.game.item.Inventory;
+import org.eternity.adventure.game.item.ItemFormatter;
 
 public class Room extends ForwardingCarrier {
     private String name;
@@ -30,5 +31,9 @@ public class Room extends ForwardingCarrier {
 
     public String description() {
         return description;
+    }
+
+    public String itemsDescription() {
+        return ItemFormatter.format("아이템", items());
     }
 }
