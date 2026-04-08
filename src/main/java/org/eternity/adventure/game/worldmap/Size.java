@@ -1,4 +1,4 @@
-package org.eternity.adventure.vo;
+package org.eternity.adventure.game.worldmap;
 
 public class Size {
     private final int width;

@@ -1,6 +1,10 @@
 package org.eternity.adventure;
 
-import org.eternity.adventure.constant.Direction;
+import org.eternity.adventure.game.command.Command;
+import org.eternity.adventure.game.command.CommandParser;
+import org.eternity.adventure.game.item.Carrier;
+import org.eternity.adventure.game.player.Player;
+import org.eternity.adventure.game.worldmap.Direction;
 
 public class Game {
     private Player player;
@@ -57,6 +61,9 @@ public class Game {
             case Command.Help() -> showHelp();
             case Command.Quit() -> stop();
             case Command.Unknown() -> showUnknownCommand();
+            case Command.Inventory() -> showInventory();
+            case Command.Take take -> takeItem(take.item()); // item()은 Command.Take record의 필드입니다.
+            case Command.Drop drop -> dropItem(drop.item());
         }
     }
 
@@ -101,6 +108,38 @@ public class Game {
     public void showRoom() {
         io.showLine("당신은 [" + player.currentRoomName() + "]에 있습니다.");
         io.showLine(player.currentRoomDescription());
+        if(player.currentRoomHasItems()) {
+            io.showLine(player.currentRoomItemsDescription());
+        }
     }
 
+    private void showInventory() {
+        io.showLine(player.inventoryDescription());
+    }
+
+    private void takeItem(String itemName) {
+        transfer(player.currentRoom(), 
+                 player, 
+                 itemName, 
+                 itemName + "을(를) 얻었습니다.", 
+                 itemName + "을(를) 얻을 수 없습니다.");
+    }
+
+    private void dropItem(String itemName) {
+        transfer(player, 
+                player.currentRoom(), 
+                itemName, 
+                itemName + "을(를) 버렸습니다.", 
+                itemName + "을(를) 버릴 수 없습니다.");
+    }
+
+    private void transfer(Carrier source, Carrier target, 
+        String itemName, String successMessage, String failureMessage) {
+        if (new Transfer(source, target, itemName).transfer()) {
+            io.showLine(successMessage);
+            return;
+        } 
+
+        io.showLine(failureMessage);
+    }
 }

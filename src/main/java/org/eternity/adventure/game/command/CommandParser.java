@@ -1,6 +1,6 @@
-package org.eternity.adventure;
+package org.eternity.adventure.game.command;
 
-import org.eternity.adventure.constant.Direction;
+import org.eternity.adventure.game.worldmap.Direction;
 
 public class CommandParser {
     public Command parseCommand(String input) {
@@ -29,6 +29,9 @@ public class CommandParser {
                     default -> new Command.Unknown();
                 };
             }
+            case "inventory" -> new Command.Inventory();
+            case "take" -> commands.length > 1 ? new Command.Take(commands[1]) : new Command.Unknown();
+            case "drop" -> commands.length > 1 ? new Command.Drop(commands[1]) : new Command.Unknown();
             case "look" -> new Command.Look();
             case "help" -> new Command.Help();
             case "quit" -> new Command.Quit();

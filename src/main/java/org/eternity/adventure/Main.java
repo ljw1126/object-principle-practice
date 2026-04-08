@@ -1,8 +1,12 @@
 package org.eternity.adventure;
 
 import org.eternity.adventure.console.Console;
-import org.eternity.adventure.vo.Position;
-import org.eternity.adventure.vo.Size;
+import org.eternity.adventure.game.command.CommandParser;
+import org.eternity.adventure.game.player.Player;
+import org.eternity.adventure.game.worldmap.Position;
+import org.eternity.adventure.game.worldmap.Room;
+import org.eternity.adventure.game.worldmap.Size;
+import org.eternity.adventure.game.worldmap.WorldMap;
 
 public class Main {
     public static void main(String[] args) {

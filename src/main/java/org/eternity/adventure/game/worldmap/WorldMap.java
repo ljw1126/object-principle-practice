@@ -1,7 +1,4 @@
-package org.eternity.adventure;
-
-import org.eternity.adventure.vo.Position;
-import org.eternity.adventure.vo.Size;
+package org.eternity.adventure.game.worldmap;
 
 public class WorldMap {
     private Size size;
@@ -11,7 +8,7 @@ public class WorldMap {
         this.size = size;
         this.rooms = new Room[size.area()];
         for(Room room : rooms) {
-            this.rooms[room.indexIn(size)] = room;
+            this.rooms[size.indexOf(room.position())] = room;
         }
     }
 

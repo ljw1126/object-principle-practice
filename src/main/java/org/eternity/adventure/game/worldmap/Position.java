@@ -1,6 +1,4 @@
-package org.eternity.adventure.vo;
-
-import org.eternity.adventure.constant.Direction;
+package org.eternity.adventure.game.worldmap;
 
 public class Position {
     private final int x;

@@ -3,7 +3,10 @@ package org.eternity.calls;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public class CallHistory {
     private String phone;
@@ -32,4 +35,17 @@ public class CallHistory {
     public List<Call> calls() {
         return Collections.unmodifiableList(calls);
     }
+
+    public CallHistory find(Predicate<Call> condition) {
+        CallHistory result = new CallHistory(this.phone);
+        calls.stream().filter(condition).forEach(result::append);
+        return result;
+    }
+
+    public Optional<Call> longestCall() {
+        return calls.stream()
+            .max(Comparator.comparing(Call::duration));
+    }
+
+
 }
