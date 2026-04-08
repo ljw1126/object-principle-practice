@@ -32,6 +32,11 @@ public abstract class ForwardingCarrier implements Carrier {
 
     @Override
     public boolean hasItems() {
-        return !items().isEmpty();
+        return carrier.hasItems();
+    }
+
+    @Override
+    public boolean transferTo(String itemName, Carrier target) {
+        return carrier.transferTo(itemName, target);
     }
 }

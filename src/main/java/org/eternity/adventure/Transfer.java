@@ -18,12 +18,7 @@ public class Transfer {
     }
 
     public boolean transfer() {
-        return source.find(itemName).map(
-            item -> {
-                source.remove(item);
-                target.add(item);
-                return true;
-        }).orElse(false);
+        return source.transferTo(itemName, target);
     }
     
     public void perform() {
