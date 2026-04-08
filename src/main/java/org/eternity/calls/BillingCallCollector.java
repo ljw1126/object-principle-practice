@@ -1,7 +1,5 @@
 package org.eternity.calls;
 
-import java.time.Duration;
-
 public class BillingCallCollector {
     private CallCollector callCollector;
 
@@ -10,15 +8,7 @@ public class BillingCallCollector {
     }
 
     public CallHistory collect(String phone) {
-        CallHistory callHistory = callCollector.collect(phone);
-        
-        CallHistory result = new CallHistory(phone);
-        for(Call call : callHistory.calls()) {
-            if(call.duration().compareTo(Duration.ofSeconds(10)) >= 0) {
-                result.append(call);
-            }
-        }
-
-        return result;
+        return callCollector.collect(phone)
+                        .find(call -> call.duration().toSeconds() >= 10);
     }
 }
