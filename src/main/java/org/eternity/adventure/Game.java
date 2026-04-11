@@ -135,6 +135,14 @@ public class Game {
                 itemName + "을(를) 버릴 수 없습니다.");
     }
 
+    private void throwItem(String itemName) {
+        transfer(player, 
+                player.worldMap(), 
+                itemName, 
+                itemName + "을(를) 어딘가로 던졌습니다.",
+                itemName + "을(를) 던질 수 없습니다.");
+    }
+
     private void transfer(Carrier source, Carrier target, 
         String itemName, String successMessage, String failureMessage) {
         if (new Transfer(source, target, itemName).transfer()) {

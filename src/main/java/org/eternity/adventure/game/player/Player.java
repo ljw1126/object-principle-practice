@@ -66,4 +66,8 @@ public class Player extends ForwardingCarrier {
     public String inventoryDescription() { 
         return ItemFormatter.format("인벤토리 목록", items());
     }
+
+    public Carrier worldMap() {
+        return worldMap;
+    }
 }
