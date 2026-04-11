@@ -3,6 +3,7 @@ package org.eternity.adventure;
 import org.eternity.adventure.game.command.Command;
 import org.eternity.adventure.game.command.CommandParser;
 import org.eternity.adventure.game.item.Carrier;
+import org.eternity.adventure.game.item.Destroy;
 import org.eternity.adventure.game.player.Player;
 import org.eternity.adventure.game.worldmap.Direction;
 
@@ -64,6 +65,7 @@ public class Game {
             case Command.Inventory() -> showInventory();
             case Command.Take take -> takeItem(take.item()); // item()은 Command.Take record의 필드입니다.
             case Command.Drop drop -> dropItem(drop.item());
+            case Command.Destory destory -> destoryItem(destory.item());
         }
     }
 
@@ -141,5 +143,17 @@ public class Game {
         } 
 
         io.showLine(failureMessage);
+    }
+
+    private void destoryItem(String itemName) {
+        Destroy destroy = new Destroy(player, player.currentRoom(), itemName);
+
+        if(destroy.isPossible()) {
+            destroy.perform();
+            io.showLine(itemName + "이(가) 파괴되었습니다.");
+            return;
+        }
+
+        io.showLine(itemName + "을(를) 파괴할 수 없습니다.");
     }
 }

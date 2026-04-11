@@ -20,4 +20,5 @@ public sealed interface Command {
     record Inventory() implements Command {}
     record Take(String item) implements Command {}
     record Drop(String item) implements Command {}
+    record Destory(String item) implements Command {}
 }
