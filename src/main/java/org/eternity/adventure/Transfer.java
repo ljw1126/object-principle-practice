@@ -1,10 +1,12 @@
 package org.eternity.adventure;
 
 import org.eternity.adventure.game.item.Carrier;
+import org.eternity.adventure.game.item.Source;
+import org.eternity.adventure.game.item.Target;
 
 public class Transfer {
-    private Carrier source;
-    private Carrier target;
+    private Source source;
+    private Target target;
     private String itemName;
 
     public Transfer(Carrier source, Carrier target, String itemName) {
