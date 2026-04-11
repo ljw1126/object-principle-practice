@@ -36,7 +36,7 @@ public abstract class ForwardingCarrier implements Carrier {
     }
 
     @Override
-    public boolean transferTo(String itemName, Carrier target) {
+    public boolean transferTo(String itemName, Target target) {
         return carrier.transferTo(itemName, target);
     }
 }
