@@ -1,15 +1,15 @@
 package org.eternity.adventure;
 
 import java.util.Random;
-import org.eternity.adventure.game.item.Carrier;
 import org.eternity.adventure.game.item.Item;
+import org.eternity.adventure.game.item.Source;
 
 public class Destroy {
-    private Carrier first;
-    private Carrier second;
+    private Source first;
+    private Source second;
     private String itemName;
 
-    public Destroy(Carrier first, Carrier second, String itemName) {
+    public Destroy(Source first, Source second, String itemName) {
         this.first = first;
         this.second = second;
         this.itemName = itemName;
@@ -19,8 +19,8 @@ public class Destroy {
         return contains(first) || contains(second);
     }
 
-    private boolean contains(Carrier carrier) {
-        return carrier.find(itemName).isPresent();
+    private boolean contains(Source source) {
+        return source.find(itemName).isPresent();
     }
 
     public void perform() {
