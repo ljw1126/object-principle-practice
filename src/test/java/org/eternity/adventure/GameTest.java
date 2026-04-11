@@ -170,6 +170,174 @@ public class GameTest {
                 "게임을 종료합니다.");
     }
 
+    @Test
+    public void look_command() {
+        FakeInputOutput io = new FakeInputOutput("look", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> 당신은 [언덕]에 있습니다.",
+                "저 멀리 성이 보이고 언덕 아래로 좁은 길이 나 있습니다.",
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void help_command() {
+        FakeInputOutput io = new FakeInputOutput("help", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> 다음 명령어를 사용할 수 있습니다.",
+                "go {north|east|south|west} - 이동, look - 보기, help - 도움말, quit - 게임 종료",
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void inventory_command() {
+        FakeInputOutput io = new FakeInputOutput("inventory", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> 인벤토리 목록: [key]",
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void take_item_success() {
+        FakeInputOutput io = new FakeInputOutput("go east", "take gem", "inventory", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> 당신은 [동굴]에 있습니다.",
+                "어둠에 잠긴 동굴 안에 작은 화톳불이 피어 있습니다.",
+                "아이템: [gem]",
+                "> gem을(를) 얻었습니다.",
+                "> 인벤토리 목록: [key, gem]",
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void take_item_failure() {
+        FakeInputOutput io = new FakeInputOutput("take sword", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> sword을(를) 얻을 수 없습니다.",
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void drop_item_success() {
+        FakeInputOutput io = new FakeInputOutput("drop key", "look", "inventory", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> key을(를) 버렸습니다.",
+                "> 당신은 [언덕]에 있습니다.",
+                "저 멀리 성이 보이고 언덕 아래로 좁은 길이 나 있습니다.",
+                "아이템: [key]",
+                "> ", // 인벤토리 목록 empty string
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void drop_item_failure() {
+        FakeInputOutput io = new FakeInputOutput("drop sword", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> sword을(를) 버릴 수 없습니다.",
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void destroy_item_success() {
+        FakeInputOutput io = new FakeInputOutput("destory key", "inventory", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> key이(가) 파괴되었습니다.",
+                "> ", // 인벤토리 목록 empty string
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void destroy_item_failure() {
+        FakeInputOutput io = new FakeInputOutput("destory sword", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> sword을(를) 파괴할 수 없습니다.",
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void throw_item_success() {
+        FakeInputOutput io = new FakeInputOutput("throw key", "inventory", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> key을(를) 어딘가로 던졌습니다.",
+                "> ", // 인벤토리 목록 empty string
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void throw_item_failure() {
+        FakeInputOutput io = new FakeInputOutput("throw sword", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> sword을(를) 던질 수 없습니다.",
+                "> ",
+                "게임을 종료합니다.");
+    }
+
+    @Test
+    public void unknown_command() {
+        FakeInputOutput io = new FakeInputOutput("dance", "quit");
+
+        Game game = createGame(io);
+        game.run();
+
+        assertThat(io.outputs()).containsSequence(
+                "> 이해할 수 없는 명령어입니다.",
+                "> ",
+                "게임을 종료합니다.");
+    }
+
     private Game createGame(FakeInputOutput io) {
         Player player = new Player(
             new WorldMap(

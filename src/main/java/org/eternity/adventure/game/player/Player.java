@@ -4,6 +4,7 @@ import org.eternity.adventure.game.item.Carrier;
 import org.eternity.adventure.game.item.ForwardingCarrier;
 import org.eternity.adventure.game.item.Inventory;
 import org.eternity.adventure.game.item.ItemFormatter;
+import org.eternity.adventure.game.item.Target;
 import org.eternity.adventure.game.worldmap.Direction;
 import org.eternity.adventure.game.worldmap.Position;
 import org.eternity.adventure.game.worldmap.Room;
@@ -67,7 +68,7 @@ public class Player extends ForwardingCarrier {
         return ItemFormatter.format("인벤토리 목록", items());
     }
 
-    public Carrier worldMap() {
+    public Target worldMap() {
         return worldMap;
     }
 }
