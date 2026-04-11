@@ -32,7 +32,9 @@ public class CommandParser {
             case "inventory" -> new Command.Inventory();
             case "take" -> commands.length > 1 ? new Command.Take(commands[1]) : new Command.Unknown();
             case "drop" -> commands.length > 1 ? new Command.Drop(commands[1]) : new Command.Unknown();
-            case "look" -> new Command.Look();
+            case "destory" -> commands.length > 1 ? new Command.Destory(commands[1]) : new Command.Unknown();
+            case "throw" -> commands.length > 1 ? new Command.Throw(commands[1]) : new Command.Unknown();
+            case "look" -> new Command.Look();  
             case "help" -> new Command.Help();
             case "quit" -> new Command.Quit();
             default -> new Command.Unknown();

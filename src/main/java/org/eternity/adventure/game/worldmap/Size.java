@@ -1,5 +1,7 @@
 package org.eternity.adventure.game.worldmap;
 
+import java.util.Random;
+
 public class Size {
     private final int width;
     private final int height;
@@ -23,5 +25,10 @@ public class Size {
 
     public int indexOf(Position position) {
         return position.toIndex(width);
+    }
+
+    public Position anyPosition() {
+        Random random = new Random();
+        return Position.of(random.nextInt(width), random.nextInt(height));
     }
 }

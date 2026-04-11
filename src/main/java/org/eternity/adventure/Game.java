@@ -3,7 +3,6 @@ package org.eternity.adventure;
 import org.eternity.adventure.game.command.Command;
 import org.eternity.adventure.game.command.CommandParser;
 import org.eternity.adventure.game.item.Carrier;
-import org.eternity.adventure.game.item.Destroy;
 import org.eternity.adventure.game.player.Player;
 import org.eternity.adventure.game.worldmap.Direction;
 
@@ -66,6 +65,7 @@ public class Game {
             case Command.Take take -> takeItem(take.item()); // item()은 Command.Take record의 필드입니다.
             case Command.Drop drop -> dropItem(drop.item());
             case Command.Destory destory -> destoryItem(destory.item());
+            case Command.Throw throwCommand -> throwItem(throwCommand.item());
         }
     }
 

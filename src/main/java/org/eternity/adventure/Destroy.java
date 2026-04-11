@@ -1,6 +1,8 @@
-package org.eternity.adventure.game.item;
+package org.eternity.adventure;
 
 import java.util.Random;
+import org.eternity.adventure.game.item.Carrier;
+import org.eternity.adventure.game.item.Item;
 
 public class Destroy {
     private Carrier first;
@@ -26,6 +28,14 @@ public class Destroy {
             throw new IllegalStateException();
         }
 
+        if(contains(first) && contains(second)) {
+            if(new Random().nextInt(2) == 0){
+                first.remove(new Item(itemName));
+            } else {
+                second.remove(new Item(itemName));
+            }
+        }
+
         if(contains(first)) {
             first.remove(new Item(itemName));
             return;
@@ -33,15 +43,6 @@ public class Destroy {
 
         if(contains(second)) {
             second.remove(new Item(itemName));
-            return;
-        }
-
-        if(contains(first) && contains(second)) {
-            if(new Random().nextInt(2) == 0){
-                first.remove(new Item(itemName));
-            } else {
-                second.remove(new Item(itemName));
-            }
         }
     }
 

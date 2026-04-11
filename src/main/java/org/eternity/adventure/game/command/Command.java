@@ -21,4 +21,5 @@ public sealed interface Command {
     record Take(String item) implements Command {}
     record Drop(String item) implements Command {}
     record Destory(String item) implements Command {}
+    record Throw(String item) implements Command {}
 }
