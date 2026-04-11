@@ -1,11 +1,9 @@
 package org.eternity.adventure.game.worldmap;
 
-import java.util.List;
-import java.util.Optional;
-import org.eternity.adventure.game.item.Carrier;
 import org.eternity.adventure.game.item.Item;
+import org.eternity.adventure.game.item.Target;
 
-public class WorldMap implements Carrier{
+public class WorldMap implements Target{
     private Size size;
     private Room[] rooms;
     
@@ -30,16 +28,6 @@ public class WorldMap implements Carrier{
         return rooms[size.indexOf(position)];
     }
 
-    @Override
-    public List<Item> items() {
-        return List.of();
-    }
-
-    @Override
-    public Optional<Item> find(String itemName) {
-        return Optional.empty();
-    }
-
     // 랜덤하게 선택된 위치에 아이템 추가
     @Override
     public void add(Item item) {
@@ -49,15 +37,5 @@ public class WorldMap implements Carrier{
         }
 
         roomAt(position).add(item);
-    }
-
-    @Override
-    public void remove(Item item) {
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
-    }
-
-    @Override
-    public boolean hasItems() {
-        throw new UnsupportedOperationException("Unimplemented method 'hasItems'");
     }
 }
