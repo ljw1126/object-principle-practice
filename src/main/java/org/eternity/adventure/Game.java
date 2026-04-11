@@ -2,7 +2,8 @@ package org.eternity.adventure;
 
 import org.eternity.adventure.game.command.Command;
 import org.eternity.adventure.game.command.CommandParser;
-import org.eternity.adventure.game.item.Carrier;
+import org.eternity.adventure.game.item.Source;
+import org.eternity.adventure.game.item.Target;
 import org.eternity.adventure.game.player.Player;
 import org.eternity.adventure.game.worldmap.Direction;
 
@@ -143,7 +144,7 @@ public class Game {
                 itemName + "을(를) 던질 수 없습니다.");
     }
 
-    private void transfer(Carrier source, Carrier target, 
+    private void transfer(Source source, Target target, 
         String itemName, String successMessage, String failureMessage) {
         if (new Transfer(source, target, itemName).transfer()) {
             io.showLine(successMessage);
