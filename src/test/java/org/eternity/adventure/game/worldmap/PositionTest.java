@@ -1,6 +1,8 @@
 package org.eternity.adventure.game.worldmap;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.eternity.adventure.game.world.worldmap.Direction;
+import org.eternity.adventure.game.world.worldmap.Position;
 import org.junit.jupiter.api.Test;
 
 public class PositionTest {

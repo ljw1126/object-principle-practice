@@ -1,7 +1,7 @@
-package org.eternity.adventure.game.worldmap;
+package org.eternity.adventure.game.world.worldmap;
 
-import org.eternity.adventure.game.item.Item;
-import org.eternity.adventure.game.item.Target;
+import org.eternity.adventure.game.world.item.Item;
+import org.eternity.adventure.game.world.item.Target;
 
 public class WorldMap implements Target{
     private Size size;

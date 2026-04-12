@@ -1,9 +1,9 @@
-package org.eternity.adventure.game.worldmap;
+package org.eternity.adventure.game.world.worldmap;
 
-import org.eternity.adventure.game.item.Carrier;
-import org.eternity.adventure.game.item.ForwardingCarrier;
-import org.eternity.adventure.game.item.Inventory;
-import org.eternity.adventure.game.item.ItemFormatter;
+import org.eternity.adventure.game.world.item.Carrier;
+import org.eternity.adventure.game.world.item.ForwardingCarrier;
+import org.eternity.adventure.game.world.item.Inventory;
+import org.eternity.adventure.game.world.item.ItemFormatter;
 
 public class Room extends ForwardingCarrier {
     private String name;

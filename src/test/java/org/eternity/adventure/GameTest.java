@@ -3,13 +3,14 @@ package org.eternity.adventure;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.eternity.adventure.console.FakeInputOutput;
 import org.eternity.adventure.game.command.CommandParser;
-import org.eternity.adventure.game.item.Inventory;
-import org.eternity.adventure.game.item.Item;
-import org.eternity.adventure.game.player.Player;
-import org.eternity.adventure.game.worldmap.Position;
-import org.eternity.adventure.game.worldmap.Room;
-import org.eternity.adventure.game.worldmap.Size;
-import org.eternity.adventure.game.worldmap.WorldMap;
+import org.eternity.adventure.game.world.World;
+import org.eternity.adventure.game.world.item.Inventory;
+import org.eternity.adventure.game.world.item.Item;
+import org.eternity.adventure.game.world.player.Player;
+import org.eternity.adventure.game.world.worldmap.Position;
+import org.eternity.adventure.game.world.worldmap.Room;
+import org.eternity.adventure.game.world.worldmap.Size;
+import org.eternity.adventure.game.world.worldmap.WorldMap;
 import org.junit.jupiter.api.Test;
 
 public class GameTest {
@@ -25,7 +26,7 @@ public class GameTest {
                 "당신은 [언덕]에 있습니다.",
                 "저 멀리 성이 보이고 언덕 아래로 좁은 길이 나 있습니다.",
                 "다음 명령어를 사용할 수 있습니다.",
-                "go {north|east|south|west} - 이동, look - 보기, help - 도움말, quit - 게임 종료");
+                "go {north|east|south|west} - 이동, look - 보기, inventory - 인벤토리, take {item} - 줍기, drop {item} - 버리기, destroy {item} - 파괴하기, throw {item} - 던지기, help - 도움말, quit - 게임 종료");
     }
 
     @Test
@@ -193,7 +194,7 @@ public class GameTest {
 
         assertThat(io.outputs()).containsSequence(
                 "> 다음 명령어를 사용할 수 있습니다.",
-                "go {north|east|south|west} - 이동, look - 보기, help - 도움말, quit - 게임 종료",
+                "go {north|east|south|west} - 이동, look - 보기, inventory - 인벤토리, take {item} - 줍기, drop {item} - 버리기, destroy {item} - 파괴하기, throw {item} - 던지기, help - 도움말, quit - 게임 종료",
                 "> ",
                 "게임을 종료합니다.");
     }
@@ -350,8 +351,10 @@ public class GameTest {
             ), 
             Position.of(0, 2), 
             new Inventory(new Item("key")));
-        CommandParser commandParser = new CommandParser();
 
-        return new Game(player, commandParser, io);
+        World world = new World(player, io);
+        CommandParser commandParser = new CommandParser();
+        
+        return new Game(world, commandParser, io);
     }
 }

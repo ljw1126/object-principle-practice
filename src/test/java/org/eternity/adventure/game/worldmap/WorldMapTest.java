@@ -1,6 +1,10 @@
 package org.eternity.adventure.game.worldmap;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.eternity.adventure.game.world.worldmap.Position;
+import org.eternity.adventure.game.world.worldmap.Room;
+import org.eternity.adventure.game.world.worldmap.Size;
+import org.eternity.adventure.game.world.worldmap.WorldMap;
 import org.junit.jupiter.api.Test;
 
 public class WorldMapTest {

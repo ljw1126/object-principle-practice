@@ -1,8 +1,8 @@
-package org.eternity.adventure;
+package org.eternity.adventure.game.world;
 
 import java.util.Random;
-import org.eternity.adventure.game.item.Item;
-import org.eternity.adventure.game.item.Source;
+import org.eternity.adventure.game.world.item.Item;
+import org.eternity.adventure.game.world.item.Source;
 
 public class Destroy {
     private Source first;

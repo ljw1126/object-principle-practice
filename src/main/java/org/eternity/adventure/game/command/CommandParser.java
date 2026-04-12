@@ -1,6 +1,6 @@
 package org.eternity.adventure.game.command;
 
-import org.eternity.adventure.game.worldmap.Direction;
+import org.eternity.adventure.game.world.worldmap.Direction;
 
 public class CommandParser {
     public Command parseCommand(String input) {
@@ -39,5 +39,18 @@ public class CommandParser {
             case "quit" -> new Command.Quit();
             default -> new Command.Unknown();
         };
+    }
+
+    public String help() {
+        return "다음 명령어를 사용할 수 있습니다.\n" +
+            "go {north|east|south|west} - 이동" +
+            ", look - 보기" +
+            ", inventory - 인벤토리" +
+            ", take {item} - 줍기" +
+            ", drop {item} - 버리기" +
+            ", destroy {item} - 파괴하기" +
+            ", throw {item} - 던지기" +
+            ", help - 도움말" +
+            ", quit - 게임 종료";
     }
 }

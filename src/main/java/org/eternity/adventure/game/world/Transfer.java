@@ -1,7 +1,7 @@
-package org.eternity.adventure;
+package org.eternity.adventure.game.world;
 
-import org.eternity.adventure.game.item.Source;
-import org.eternity.adventure.game.item.Target;
+import org.eternity.adventure.game.world.item.Source;
+import org.eternity.adventure.game.world.item.Target;
 
 public class Transfer {
     private Source source;

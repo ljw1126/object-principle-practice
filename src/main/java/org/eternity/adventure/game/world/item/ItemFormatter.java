@@ -1,4 +1,4 @@
-package org.eternity.adventure.game.item;
+package org.eternity.adventure.game.world.item;
 
 import java.util.List;
 import java.util.stream.Collectors;

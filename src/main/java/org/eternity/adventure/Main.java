@@ -2,11 +2,12 @@ package org.eternity.adventure;
 
 import org.eternity.adventure.console.Console;
 import org.eternity.adventure.game.command.CommandParser;
-import org.eternity.adventure.game.player.Player;
-import org.eternity.adventure.game.worldmap.Position;
-import org.eternity.adventure.game.worldmap.Room;
-import org.eternity.adventure.game.worldmap.Size;
-import org.eternity.adventure.game.worldmap.WorldMap;
+import org.eternity.adventure.game.world.World;
+import org.eternity.adventure.game.world.player.Player;
+import org.eternity.adventure.game.world.worldmap.Position;
+import org.eternity.adventure.game.world.worldmap.Room;
+import org.eternity.adventure.game.world.worldmap.Size;
+import org.eternity.adventure.game.world.worldmap.WorldMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,8 +23,9 @@ public class Main {
             Position.of(0, 2));
         CommandParser commandParser = new CommandParser();
         InputOutput io = new Console();
+        World world = new World(player, io);
 
-        Game game = new Game(player, commandParser, io);
+        Game game = new Game(world, commandParser, io);
         game.run();
     }
 }

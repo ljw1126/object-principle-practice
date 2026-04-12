@@ -1,4 +1,4 @@
-package org.eternity.adventure.game.worldmap;
+package org.eternity.adventure.game.world.worldmap;
 
 public class Position {
     private final int x;

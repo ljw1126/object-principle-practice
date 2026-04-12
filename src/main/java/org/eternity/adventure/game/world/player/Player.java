@@ -1,14 +1,14 @@
-package org.eternity.adventure.game.player;
+package org.eternity.adventure.game.world.player;
 
-import org.eternity.adventure.game.item.Carrier;
-import org.eternity.adventure.game.item.ForwardingCarrier;
-import org.eternity.adventure.game.item.Inventory;
-import org.eternity.adventure.game.item.ItemFormatter;
-import org.eternity.adventure.game.item.Target;
-import org.eternity.adventure.game.worldmap.Direction;
-import org.eternity.adventure.game.worldmap.Position;
-import org.eternity.adventure.game.worldmap.Room;
-import org.eternity.adventure.game.worldmap.WorldMap;
+import org.eternity.adventure.game.world.item.Carrier;
+import org.eternity.adventure.game.world.item.ForwardingCarrier;
+import org.eternity.adventure.game.world.item.Inventory;
+import org.eternity.adventure.game.world.item.ItemFormatter;
+import org.eternity.adventure.game.world.item.Target;
+import org.eternity.adventure.game.world.worldmap.Direction;
+import org.eternity.adventure.game.world.worldmap.Position;
+import org.eternity.adventure.game.world.worldmap.Room;
+import org.eternity.adventure.game.world.worldmap.WorldMap;
 
 public class Player extends ForwardingCarrier {
     private WorldMap worldMap;

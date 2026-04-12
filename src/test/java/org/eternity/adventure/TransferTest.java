@@ -1,10 +1,11 @@
 package org.eternity.adventure;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.eternity.adventure.game.item.Inventory;
-import org.eternity.adventure.game.item.Item;
-import org.eternity.adventure.game.worldmap.Position;
-import org.eternity.adventure.game.worldmap.Room;
+import org.eternity.adventure.game.world.Transfer;
+import org.eternity.adventure.game.world.item.Inventory;
+import org.eternity.adventure.game.world.item.Item;
+import org.eternity.adventure.game.world.worldmap.Position;
+import org.eternity.adventure.game.world.worldmap.Room;
 import org.junit.jupiter.api.Test;
 
 public class TransferTest {
