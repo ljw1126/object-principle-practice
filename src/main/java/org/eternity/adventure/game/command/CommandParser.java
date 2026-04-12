@@ -1,13 +1,10 @@
 package org.eternity.adventure.game.command;
 
-import org.eternity.adventure.InputOutput;
 import org.eternity.adventure.game.world.worldmap.Direction;
 
 public class CommandParser {
-    private InputOutput io; // do not used
 
-    public CommandParser(InputOutput io) {
-        this.io = io;
+    public CommandParser() {
     }
 
     public Command parseCommand(String input) {

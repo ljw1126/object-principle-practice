@@ -1,6 +1,6 @@
 package org.eternity.adventure.game.world;
 
-import org.eternity.adventure.InputOutput;
+import org.eternity.adventure.game.Output;
 import org.eternity.adventure.game.world.item.Source;
 import org.eternity.adventure.game.world.item.Target;
 import org.eternity.adventure.game.world.player.Player;
@@ -8,11 +8,11 @@ import org.eternity.adventure.game.world.worldmap.Direction;
 
 public class World {
     private Player player;
-    private InputOutput io;
+    private Output output;
 
-    public World(Player player, InputOutput io) {
+    public World(Player player, Output output) {
         this.player = player;
-        this.io = io;
+        this.output = output;
     }
 
     public void tryMove(Direction direction) {
@@ -26,15 +26,15 @@ public class World {
     }
 
     public void showRoom() {
-        io.showLine("당신은 [" + player.currentRoomName() + "]에 있습니다.");
-        io.showLine(player.currentRoomDescription());
+        output.showLine("당신은 [" + player.currentRoomName() + "]에 있습니다.");
+        output.showLine(player.currentRoomDescription());
         if(player.currentRoomHasItems()) {
-            io.showLine(player.currentRoomItemsDescription());
+            output.showLine(player.currentRoomItemsDescription());
         }
     }
 
     private void showBlocked() {
-        io.showLine("이동할 수 없습니다.");
+        output.showLine("이동할 수 없습니다.");
     }
 
     public void takeItem(String itemName) {
@@ -64,26 +64,27 @@ public class World {
     public void transfer(Source source, Target target, 
         String itemName, String successMessage, String failureMessage) {
         if (new Transfer(source, target, itemName).transfer()) {
-            io.showLine(successMessage);
+            output.showLine(successMessage);
             return;
         } 
 
-        io.showLine(failureMessage);
+        output.showLine(failureMessage);
     }
 
+    // TODO. rename
     public void destoryItem(String itemName) {
         Destroy destroy = new Destroy(player, player.currentRoom(), itemName);
 
         if(destroy.isPossible()) {
             destroy.perform();
-            io.showLine(itemName + "이(가) 파괴되었습니다.");
+            output.showLine(itemName + "이(가) 파괴되었습니다.");
             return;
         }
 
-        io.showLine(itemName + "을(를) 파괴할 수 없습니다.");
+        output.showLine(itemName + "을(를) 파괴할 수 없습니다.");
     }
 
     public void showInventory() {
-        io.showLine(player.inventoryDescription());
+        output.showLine(player.inventoryDescription());
     }
 }

@@ -1,9 +1,10 @@
 package org.eternity.adventure.console;
 
 import java.util.Scanner;
-import org.eternity.adventure.InputOutput;
+import org.eternity.adventure.game.Input;
+import org.eternity.adventure.game.Output;
 
-public class Console implements InputOutput {
+public class Console implements Input, Output {
     private Scanner scanner;
 
     public Console() {

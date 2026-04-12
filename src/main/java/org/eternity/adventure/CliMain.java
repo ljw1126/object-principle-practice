@@ -1,6 +1,8 @@
 package org.eternity.adventure;
 
 import org.eternity.adventure.console.Console;
+import org.eternity.adventure.game.CliGame;
+import org.eternity.adventure.game.Game;
 import org.eternity.adventure.game.command.CommandParser;
 import org.eternity.adventure.game.world.World;
 import org.eternity.adventure.game.world.player.Player;
@@ -9,7 +11,7 @@ import org.eternity.adventure.game.world.worldmap.Room;
 import org.eternity.adventure.game.world.worldmap.Size;
 import org.eternity.adventure.game.world.worldmap.WorldMap;
 
-public class CuiMain {
+public class CliMain {
     public static void main(String[] args) {
         Player player = new Player(
             new WorldMap(
@@ -22,11 +24,12 @@ public class CuiMain {
             ), 
             Position.of(0, 2));
 
-        InputOutput io = new Console();
-        CommandParser commandParser = new CommandParser(io);
+        Console io = new Console();
+        CommandParser commandParser = new CommandParser();
         World world = new World(player, io);
 
-        CliGame game = new CliGame(world, commandParser, io);
+        Game game = new Game(world, commandParser, io);
+        game.initialize(new CliGame(game, io, io));
         game.run();
     }
 }
