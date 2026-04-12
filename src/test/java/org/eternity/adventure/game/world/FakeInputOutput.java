@@ -1,9 +1,10 @@
 package org.eternity.adventure.game.world;
 
 import java.util.List;
-import org.eternity.adventure.InputOutput;
+import org.eternity.adventure.game.Input;
+import org.eternity.adventure.game.Output;
 
-public class FakeInputOutput implements InputOutput{
+public class FakeInputOutput implements Input, Output{
     private int currentInput;
     private List<String> inputs;
     private StringBuilder outputs;

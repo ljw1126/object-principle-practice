@@ -1,6 +1,8 @@
 package org.eternity.adventure;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.eternity.adventure.game.CliGame;
+import org.eternity.adventure.game.Game;
 import org.eternity.adventure.game.command.CommandParser;
 import org.eternity.adventure.game.world.FakeInputOutput;
 import org.eternity.adventure.game.world.World;
@@ -18,7 +20,7 @@ public class GameTest {
     public void contains_welcome() {
         FakeInputOutput io = new FakeInputOutput("quit");
         
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -33,7 +35,7 @@ public class GameTest {
     public void move_north_passed() {
         FakeInputOutput io = new FakeInputOutput("go north", "quit");
         
-        CliGame game = createGame(io) ;
+        Game game = createGame(io) ;
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -48,7 +50,7 @@ public class GameTest {
     public void move_north_blocked() {
         FakeInputOutput io = new FakeInputOutput("go north", "go north", "go north", "quit");
         
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -66,7 +68,7 @@ public class GameTest {
     public void move_east_passed() {
         FakeInputOutput io = new FakeInputOutput("go east", "quit");
         
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -81,7 +83,7 @@ public class GameTest {
     public void move_east_blocked() {
         FakeInputOutput io = new FakeInputOutput("go east", "go east", "quit");
         
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -97,7 +99,7 @@ public class GameTest {
     public void move_south_passed() {
         FakeInputOutput io = new FakeInputOutput("go north", "go south", "quit");
         
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -114,7 +116,7 @@ public class GameTest {
     public void move_south_blocked() {
         FakeInputOutput io = new FakeInputOutput("go south", "quit");
         
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -127,7 +129,7 @@ public class GameTest {
     public void move_west_passed() {
         FakeInputOutput io = new FakeInputOutput("go east", "go west", "quit");
         
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -144,7 +146,7 @@ public class GameTest {
     public void move_west_blocked() {
         FakeInputOutput io = new FakeInputOutput("go west", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -157,7 +159,7 @@ public class GameTest {
     public void move_empty() {
         FakeInputOutput io = new FakeInputOutput("go north", "go north", "go east", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -175,7 +177,7 @@ public class GameTest {
     public void look_command() {
         FakeInputOutput io = new FakeInputOutput("look", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -189,7 +191,7 @@ public class GameTest {
     public void help_command() {
         FakeInputOutput io = new FakeInputOutput("help", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -203,7 +205,7 @@ public class GameTest {
     public void inventory_command() {
         FakeInputOutput io = new FakeInputOutput("inventory", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -216,7 +218,7 @@ public class GameTest {
     public void take_item_success() {
         FakeInputOutput io = new FakeInputOutput("go east", "take gem", "inventory", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -233,7 +235,7 @@ public class GameTest {
     public void take_item_failure() {
         FakeInputOutput io = new FakeInputOutput("take sword", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -246,7 +248,7 @@ public class GameTest {
     public void drop_item_success() {
         FakeInputOutput io = new FakeInputOutput("drop key", "look", "inventory", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -263,7 +265,7 @@ public class GameTest {
     public void drop_item_failure() {
         FakeInputOutput io = new FakeInputOutput("drop sword", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -276,7 +278,7 @@ public class GameTest {
     public void destroy_item_success() {
         FakeInputOutput io = new FakeInputOutput("destory key", "inventory", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -290,7 +292,7 @@ public class GameTest {
     public void destroy_item_failure() {
         FakeInputOutput io = new FakeInputOutput("destory sword", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -303,7 +305,7 @@ public class GameTest {
     public void throw_item_success() {
         FakeInputOutput io = new FakeInputOutput("throw key", "inventory", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -317,7 +319,7 @@ public class GameTest {
     public void throw_item_failure() {
         FakeInputOutput io = new FakeInputOutput("throw sword", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -330,7 +332,7 @@ public class GameTest {
     public void unknown_command() {
         FakeInputOutput io = new FakeInputOutput("dance", "quit");
 
-        CliGame game = createGame(io);
+        Game game = createGame(io);
         game.run();
 
         assertThat(io.outputs()).containsSequence(
@@ -339,7 +341,7 @@ public class GameTest {
                 "게임을 종료합니다.");
     }
 
-    private CliGame createGame(FakeInputOutput io) {
+    private Game createGame(FakeInputOutput io) {
         Player player = new Player(
             new WorldMap(
                 Size.with(2, 3), 
@@ -353,8 +355,10 @@ public class GameTest {
             new Inventory(new Item("key")));
 
         World world = new World(player, io);
-        CommandParser commandParser = new CommandParser(io);
+        CommandParser commandParser = new CommandParser();
         
-        return new CliGame(world, commandParser, io);
+        Game game = new Game(world, commandParser, io);
+        game.initialize(new CliGame(game, io, io));
+        return game;
     }
 }
