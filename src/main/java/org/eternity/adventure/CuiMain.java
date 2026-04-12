@@ -9,7 +9,7 @@ import org.eternity.adventure.game.world.worldmap.Room;
 import org.eternity.adventure.game.world.worldmap.Size;
 import org.eternity.adventure.game.world.worldmap.WorldMap;
 
-public class Main {
+public class CuiMain {
     public static void main(String[] args) {
         Player player = new Player(
             new WorldMap(
@@ -21,11 +21,12 @@ public class Main {
                 new Room(Position.of(1, 2), "동굴", "어둠에 잠긴 동굴 안에 작은 화톳불이 피어 있습니다.")
             ), 
             Position.of(0, 2));
-        CommandParser commandParser = new CommandParser();
+
         InputOutput io = new Console();
+        CommandParser commandParser = new CommandParser(io);
         World world = new World(player, io);
 
-        Game game = new Game(world, commandParser, io);
+        CuiGame game = new CuiGame(world, commandParser, io);
         game.run();
     }
 }

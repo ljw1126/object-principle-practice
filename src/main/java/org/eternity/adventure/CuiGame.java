@@ -4,13 +4,13 @@ import org.eternity.adventure.game.command.Command;
 import org.eternity.adventure.game.command.CommandParser;
 import org.eternity.adventure.game.world.World;
 
-public class Game {
+public class CuiGame {
     private World world;
     private CommandParser commandParser;
     private boolean running;
     private InputOutput io;
 
-    public Game(World world, CommandParser commandParser, InputOutput io) {
+    public CuiGame(World world, CommandParser commandParser, InputOutput io) {
         this.world = world;
         this.commandParser = commandParser;
         this.io = io;
