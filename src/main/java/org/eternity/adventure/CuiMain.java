@@ -26,7 +26,7 @@ public class CuiMain {
         CommandParser commandParser = new CommandParser(io);
         World world = new World(player, io);
 
-        CuiGame game = new CuiGame(world, commandParser, io);
+        CliGame game = new CliGame(world, commandParser, io);
         game.run();
     }
 }
