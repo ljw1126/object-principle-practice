@@ -1,8 +1,7 @@
-package org.eternity.adventure.game.player;
+package org.eternity.adventure.game.world.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import org.eternity.adventure.game.world.player.Player;
 import org.eternity.adventure.game.world.worldmap.Direction;
 import org.eternity.adventure.game.world.worldmap.Position;
 import org.eternity.adventure.game.world.worldmap.Room;

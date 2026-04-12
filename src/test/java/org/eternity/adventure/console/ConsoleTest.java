@@ -1,11 +1,10 @@
-package org.eternity.console;
+package org.eternity.adventure.console;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import org.eternity.adventure.console.Console;
 import org.junit.jupiter.api.Test;
 
 public class ConsoleTest {

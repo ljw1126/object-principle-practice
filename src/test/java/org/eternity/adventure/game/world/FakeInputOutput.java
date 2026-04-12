@@ -1,4 +1,4 @@
-package org.eternity.adventure.console;
+package org.eternity.adventure.game.world;
 
 import java.util.List;
 import org.eternity.adventure.InputOutput;

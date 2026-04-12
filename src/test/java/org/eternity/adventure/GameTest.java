@@ -1,8 +1,8 @@
 package org.eternity.adventure;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.eternity.adventure.console.FakeInputOutput;
 import org.eternity.adventure.game.command.CommandParser;
+import org.eternity.adventure.game.world.FakeInputOutput;
 import org.eternity.adventure.game.world.World;
 import org.eternity.adventure.game.world.item.Inventory;
 import org.eternity.adventure.game.world.item.Item;

@@ -1,7 +1,6 @@
-package org.eternity.adventure;
+package org.eternity.adventure.game.world;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.eternity.adventure.game.world.Transfer;
 import org.eternity.adventure.game.world.item.Inventory;
 import org.eternity.adventure.game.world.item.Item;
 import org.eternity.adventure.game.world.worldmap.Position;
