@@ -8,7 +8,6 @@ public class CliGame implements GameLoop{
     
     public CliGame(Game game, Input input, Output output) {
         this.game = game;
-        this.game.initialize(this);
         this.input = input;
         this.output = output;
     }
