@@ -16,8 +16,7 @@ public class WorldMap implements Target{
     }
 
     public boolean isBlocked(Position position) {
-        return isExcluded(position) 
-            || roomAt(position) == null;
+        return at(position).isBlocked();
     }
 
     public boolean isExcluded(Position position) {
@@ -31,11 +30,26 @@ public class WorldMap implements Target{
     // 랜덤하게 선택된 위치에 아이템 추가
     @Override
     public void add(Item item) {
-        Position position = size.anyPosition();
-        if(isBlocked(position)) {
-            return;
+        at(size.anyPosition()).add(item);
+    }
+
+    public Location at(Position position) {
+        if (isExcluded(position)) {
+            return new Location(null);
+        }
+        return new Location(roomAt(position));
+    }
+
+    public record Location(Room room) {
+        public boolean isBlocked() {
+            return room == null;
         }
 
-        roomAt(position).add(item);
+        public void add(Item item) {
+            if (!isBlocked()) {
+                room.add(item);
+            }
+        }
     }
-}
+    }
+
