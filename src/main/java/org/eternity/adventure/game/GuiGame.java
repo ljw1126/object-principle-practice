@@ -57,6 +57,7 @@ public class GuiGame extends JFrame implements ActionListener, GameLoop, Output{
         add(new JScrollPane(display), BorderLayout.CENTER);
     }
 
+    // Deprecated
     public void run(Game game) {
         this.game = game;
         this.game.initialize(this);

@@ -12,6 +12,7 @@ public class CliGame implements GameLoop{
         this.output = output;
     }
 
+    // Deprecated
     public void run() {
         game.run();
     }
