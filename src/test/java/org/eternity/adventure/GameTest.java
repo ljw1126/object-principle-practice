@@ -276,7 +276,7 @@ public class GameTest {
 
     @Test
     public void destroy_item_success() {
-        FakeInputOutput io = new FakeInputOutput("destory key", "inventory", "quit");
+        FakeInputOutput io = new FakeInputOutput("destroy key", "inventory", "quit");
 
         Game game = createGame(io);
         game.run();
@@ -290,7 +290,7 @@ public class GameTest {
 
     @Test
     public void destroy_item_failure() {
-        FakeInputOutput io = new FakeInputOutput("destory sword", "quit");
+        FakeInputOutput io = new FakeInputOutput("destroy sword", "quit");
 
         Game game = createGame(io);
         game.run();
