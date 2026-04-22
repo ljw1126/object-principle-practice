@@ -34,6 +34,7 @@ public class Destroy {
             } else {
                 second.remove(new Item(itemName));
             }
+            return;
         }
 
         if(contains(first)) {
