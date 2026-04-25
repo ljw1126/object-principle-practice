@@ -2,14 +2,16 @@ package org.eternity.example;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 매주 특정 요일들에 반복되는 일정을 관리하는 클래스입니다.
  * 예: "매주 월, 수, 금", "매주 주말(토, 일)" 등
  */
-public class WeeklyPlan implements RecurringPlan {
+public class WeeklyPlan implements RecurringPlan, TemporalFilter {
 
     private final Set<DayOfWeek> dayOfWeeks;
 
@@ -27,6 +29,13 @@ public class WeeklyPlan implements RecurringPlan {
         var copy = new HashSet<>(dayOfWeeks);
         copy.add(day.getDayOfWeek());
         return new WeeklyPlan(copy);
+    }
+
+    @Override
+    public Collection<LocalDate> apply(DateInterval interval) {
+        return interval.stream()
+                    .filter(day -> includes(day))
+                    .collect(Collectors.toSet());
     }
     
 }
